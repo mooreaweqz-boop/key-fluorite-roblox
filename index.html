@@ -14,7 +14,6 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            /* ใช้ฟอนต์ Mitr และ Kanit สุดน่ารัก */
             font-family: 'Mitr', 'Kanit', -apple-system, sans-serif;
             -webkit-font-smoothing: antialiased;
         }
@@ -71,13 +70,15 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
+            padding: 6px; /* เพิ่มพื้นที่ว่างด้านในเล็กน้อยเพื่อให้รูปไม่ชิดขอบวงกลมเกินไป */
         }
 
-        /* ปรับแต่งรูปภาพโลโก้ด้านใน */
+        /* ปรับแต่งให้รูปภาพอยู่ตรงกลางพอดี ไม่เบี้ยว ไม่โดนตัดขอบ */
         .logo-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            width: 90%;
+            height: 90%;
+            object-fit: contain; /* ปรับรูปภาพให้อยู่ในกรอบพอดีๆ โดยไม่เสียสัดส่วน */
+            border-radius: 50%;
         }
 
         /* ชื่อแอปสไตล์ทูโทน */
@@ -445,7 +446,6 @@
         <!-- ล็อกอินการ์ดสไตล์ Cyberpunk ดำ-แดง -->
         <div class="cyber-card" id="login-card">
             
-            <!-- อัปเดต: เปลี่ยน src เป็นรูปภาพใหม่ตามที่คุณส่งมาแล้วครับ -->
             <div class="logo-wrapper">
                 <img src="https://cdn.discordapp.com/attachments/1528247158069792863/1528249908845351042/IMG_1880.png?ex=6a5d9d23&is=6a5c4ba3&hm=1258cef0d3504e6bfe263a18198e3ae78fd2238c6bd69536c54b77deba2388a1&" alt="Logo" class="logo-image">
             </div>
