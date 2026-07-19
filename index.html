@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>REALPOOH PROXY - Premium Panel</title>
+    <title>REALPOOH PROXY</title>
     <style>
         * {
             margin: 0;
@@ -14,8 +14,8 @@
         }
 
         body {
-            background: linear-gradient(135deg, #F3EEF9 0%, #E8F1F5 100%);
-            color: #333;
+            background-color: #000000;
+            color: #ffffff;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -27,199 +27,176 @@
             width: 100%;
             max-width: 414px;
             height: 100vh;
-            background: radial-gradient(circle at 10% 10%, rgba(230, 215, 245, 0.7) 0%, transparent 40%),
-                        radial-gradient(circle at 90% 80%, rgba(215, 235, 245, 0.8) 0%, transparent 50%),
-                        #F8F6FA;
+            background-color: #000000;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 40px 24px;
+            padding: 24px;
             position: relative;
         }
 
         /* ---------------------------------- */
-        /* วงแหวนเหล็กเมทัลลิก 3D */
+        /* การ์ดสไตล์ Cyberpunk ตามรูปภาพ */
         /* ---------------------------------- */
-        .loader-wrapper {
-            position: relative;
-            width: 170px;
-            height: 170px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 45px;
-        }
-
-        .glass-circle {
-            position: absolute;
-            width: 110px;
-            height: 110px;
-            background: linear-gradient(135deg, #ffffff 0%, #e2d9f3 50%, #c8b9e6 100%);
-            border-radius: 50%;
-            box-shadow: 
-                0 15px 35px rgba(108, 82, 153, 0.25),
-                inset 0 4px 10px rgba(255, 255, 255, 0.9),
-                inset 0 -4px 10px rgba(108, 82, 153, 0.2),
-                0 0 0 6px rgba(255, 255, 255, 0.5); 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 3;
-        }
-
-        .brand-initial {
-            font-size: 32px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #4A3570 0%, #8C61C7 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -0.5px;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
-        }
-
-        .svg-rotation-wrapper {
-            position: absolute;
-            width: 160px;
-            height: 160px;
-            z-index: 2;
-            animation: smooth-spin 2.5s linear infinite;
-        }
-
-        .svg-ring {
+        .cyber-card {
             width: 100%;
-            height: 100%;
-            transform: rotate(-90deg);
-        }
-
-        .ring-bg {
-            fill: none;
-            stroke: #E4DFEC;
-            stroke-width: 9;
-        }
-
-        .ring-flow {
-            fill: none;
-            stroke: url(#chromeGradient);
-            stroke-width: 9;
-            stroke-linecap: round;
-            stroke-dasharray: 440;
-            stroke-dashoffset: 440;
-            transition: stroke-dashoffset 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        @keyframes smooth-spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .brand-section {
+            max-width: 360px;
+            background: #050505;
+            border: 2px solid #300c0c;
+            border-radius: 28px;
+            padding: 35px 24px;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.15);
             text-align: center;
-            margin-bottom: 40px;
+            position: relative;
         }
 
-        .main-title {
-            font-size: 26px;
-            font-weight: 800;
-            color: #3A394D;
-            letter-spacing: 0.5px;
-            margin-bottom: 6px;
+        /* วงกลมโลโก้เรืองแสง */
+        .logo-wrapper {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px auto;
+            border-radius: 50%;
+            background: radial-gradient(circle, #4a0909 0%, #1a0202 100%);
+            border: 3px solid #ff1a1a;
+            box-shadow: 0 0 20px rgba(255, 26, 26, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .main-title span {
-            color: #8C61C7;
+        .logo-icon {
+            font-size: 38px;
+            font-weight: 900;
+            color: #ffffff;
+            font-style: italic;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
         }
 
-        .sub-title {
-            font-size: 11px;
-            color: #9C9BB3;
-            text-transform: uppercase;
-            letter-spacing: 3px;
+        /* ชื่อแอปสไตล์ทูโทน */
+        .brand-title {
+            font-size: 28px;
             font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
-        .status-box {
-            width: 100%;
-            max-width: 260px;
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-            margin-bottom: 50px;
+        .brand-title span {
+            color: #ff1a1a;
+            text-shadow: 0 0 10px rgba(255, 26, 26, 0.4);
         }
 
-        .status-row {
-            display: flex;
-            align-items: center;
-            font-size: 15px;
-            color: #8A899C;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .check-dot {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            border: 2px solid #D5D2E2;
-            margin-right: 16px;
-            position: relative;
-            background: #FFF;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .status-row.active {
-            color: #4B495E;
-        }
-
-        .status-row.active .check-dot {
-            background-color: #E2F6E7;
-            border-color: #4CD080;
-            box-shadow: 0 0 8px rgba(76, 208, 128, 0.4);
-        }
-
-        .status-row.active .check-dot::after {
-            content: '';
-            position: absolute;
-            left: 6px;
-            top: 2px;
-            width: 5px;
-            height: 10px;
-            border: solid #4CD080;
-            border-width: 0 2px 2px 0;
-            transform: rotate(45deg);
-        }
-
-        .progress-wrapper {
-            width: 100%;
-            max-width: 280px;
-            text-align: center;
-        }
-
-        .bar-outline {
-            width: 100%;
-            height: 6px;
-            background-color: #E5E2F0;
-            border-radius: 10px;
-            margin-bottom: 12px;
-            overflow: hidden;
-        }
-
-        .bar-fill {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #8C61C7, #A881C9);
-            border-radius: 10px;
-            transition: width 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .counter-num {
+        .brand-subtitle {
             font-size: 13px;
-            color: #9C9BB3;
-            font-weight: 600;
+            color: #8c8c8c;
+            margin-top: 5px;
+            margin-bottom: 30px;
+            letter-spacing: 0.5px;
         }
 
         /* ---------------------------------- */
-        /* หน้าจอสำหรับใส่ KEY */
+        /* ช่องกรอกข้อมูล (Inputs) */
+        /* ---------------------------------- */
+        .input-group {
+            width: 100%;
+            margin-bottom: 16px;
+        }
+
+        .cyber-input {
+            width: 100%;
+            background-color: #0c0c0c;
+            border: 1.5px solid #221212;
+            border-radius: 14px;
+            padding: 16px 20px;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            outline: none;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .cyber-input::placeholder {
+            color: #555555;
+            text-transform: uppercase;
+        }
+
+        .cyber-input:focus {
+            border-color: #ff1a1a;
+            box-shadow: 0 0 12px rgba(255, 26, 26, 0.3);
+            background-color: #120505;
+        }
+
+        /* แถวสองคอลัมน์ (UDID + GET UDID) */
+        .row-inputs {
+            display: grid;
+            grid-template-columns: 1.7fr 1fr;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .btn-get-udid {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #0c0c0c;
+            border: 2px solid #00f0ff;
+            border-radius: 14px;
+            color: #00f0ff;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.1);
+        }
+
+        .btn-get-udid:hover {
+            background-color: #00f0ff;
+            color: #000000;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+        }
+
+        /* ปุ่มกดหลักสีแดงเรืองแสง */
+        .btn-authorize {
+            width: 100%;
+            background: linear-gradient(135deg, #ff0000 0%, #b30000 100%);
+            border: none;
+            border-radius: 16px;
+            padding: 16px;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 6px 20px rgba(255, 0, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-authorize:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 0, 0, 0.6);
+        }
+
+        .error-message {
+            color: #ff4d4d;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 12px;
+            display: none;
+        }
+
+        /* ---------------------------------- */
+        /* หน้าจอหลักแผงควบคุมหลังยืนยันตัวตน */
         /* ---------------------------------- */
         .overlay-screen {
             position: absolute;
@@ -227,7 +204,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: #F8F6FA;
+            background: #000000;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -235,7 +212,7 @@
             padding: 24px;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.4s ease;
             z-index: 10;
         }
 
@@ -244,197 +221,66 @@
             visibility: visible;
         }
 
-        .key-box {
-            width: 100%;
-            max-width: 336px;
-            background: #FFFFFF;
-            padding: 34px 24px;
-            border-radius: 24px;
-            border: 1px solid rgba(229, 226, 240, 0.8);
-            box-shadow: 0 16px 40px rgba(140, 97, 199, 0.06);
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
-
-        .key-box.shake {
-            animation: shake 0.4s ease-in-out;
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            20%, 60% { transform: translateX(-6px); }
-            40%, 80% { transform: translateX(6px); }
-        }
-
-        .key-box h2 {
-            font-size: 21px;
+        /* ข้อมูลแผงควบคุมด้านใน */
+        .panel-header-title {
+            font-size: 18px;
+            color: #ffffff;
             font-weight: 800;
-            color: #3A394D;
-            margin-bottom: 8px;
-            letter-spacing: 0.3px;
-        }
-
-        .key-box p {
-            font-size: 13px;
-            color: #9C9BB3;
-            margin-bottom: 26px;
-        }
-
-        .input-wrapper {
-            position: relative;
-            width: 100%;
-            margin-bottom: 18px;
-        }
-
-        .key-input {
-            width: 100%;
-            padding: 15px 50px 15px 20px;
-            font-size: 16px;
-            border: 2px solid #E5E2F0;
-            border-radius: 16px;
-            outline: none;
-            font-weight: 600;
-            letter-spacing: 2px;
-            transition: all 0.25s ease;
-            color: #4B495E;
-            background-color: #FCFAFD;
-        }
-
-        .key-input:focus {
-            border-color: #8C61C7;
-            background-color: #FFFFFF;
-            box-shadow: 0 0 0 4px rgba(140, 97, 199, 0.1);
-        }
-
-        .toggle-visibility {
-            position: absolute;
-            right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: #A8A6BE;
-            padding: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: color 0.2s;
-        }
-
-        .toggle-visibility:hover {
-            color: #8C61C7;
-        }
-
-        .submit-btn {
-            width: 100%;
-            background: linear-gradient(135deg, #8C61C7 0%, #7A51B3 100%);
-            color: white;
-            border: none;
-            padding: 15px;
-            font-size: 15px;
-            font-weight: 700;
-            border-radius: 16px;
-            cursor: pointer;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 6px 16px rgba(140, 97, 199, 0.25);
+            margin-bottom: 16px;
             letter-spacing: 0.5px;
         }
 
-        .submit-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 8px 24px rgba(140, 97, 199, 0.35);
-        }
-
-        .error-message {
-            color: #FF4D4D;
-            font-size: 12px;
-            font-weight: 600;
-            margin-top: 12px;
-            display: none;
-        }
-
-        /* ---------------------------------- */
-        /* หน้าหลักควบคุมฟังก์ชัน (Control Panel) */
-        /* ---------------------------------- */
-        .panel-box {
-            width: 100%;
-            max-width: 340px;
-            background: #FFFFFF;
-            padding: 24px 18px;
-            border-radius: 24px;
-            border: 1px solid rgba(229, 226, 240, 0.8);
-            box-shadow: 0 16px 40px rgba(140, 97, 199, 0.06);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .panel-header {
-            text-align: center;
-            margin-bottom: 18px;
-        }
-
-        .panel-header h3 {
-            font-size: 18px;
-            color: #3A394D;
-            font-weight: 800;
-        }
-
-        /* กล่องแสดงวันหมดอายุ ซ้าย - ขวา */
-        .expiry-container {
+        .expiry-box {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            background: #F5F3FA;
-            border: 1px solid rgba(200, 185, 230, 0.4);
-            padding: 12px 16px;
+            background: #120707;
+            border: 1px solid #331111;
+            padding: 14px 16px;
             border-radius: 14px;
-            margin-bottom: 12px;
-        }
-
-        .expiry-left {
-            font-size: 14px;
-            font-weight: 700;
-            color: #8C61C7;
-        }
-
-        .expiry-right {
+            margin-bottom: 16px;
             font-size: 13px;
-            font-weight: 600;
-            color: #72708A;
-            letter-spacing: 0.5px;
         }
 
-        /* แถวฟังก์ชันสวิตช์เลื่อน */
+        .expiry-title {
+            color: #ff1a1a;
+            font-weight: 700;
+        }
+
+        .expiry-time {
+            color: #aaaaaa;
+            font-weight: 600;
+        }
+
+        /* ฟังก์ชันสวิตช์เลื่อน */
         .function-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #FDFBFF;
-            border: 1px solid #E5E2F0;
-            padding: 14px 16px;
-            border-radius: 18px;
-            transition: all 0.3s ease;
+            background: #0c0c0c;
+            border: 1px solid #221212;
+            padding: 16px;
+            border-radius: 16px;
         }
 
         .function-info {
             display: flex;
             flex-direction: column;
+            text-align: left;
             gap: 2px;
         }
 
         .function-title {
             font-size: 14px;
             font-weight: 700;
-            color: #4B495E;
+            color: #ffffff;
         }
 
         .function-desc {
             font-size: 11px;
-            color: #9C9BB3;
+            color: #666666;
         }
 
-        /* ปุ่มสวิตช์ Apple Style */
+        /* สวิตช์ Apple Style */
         .switch {
             position: relative;
             display: inline-block;
@@ -442,18 +288,14 @@
             height: 26px;
         }
 
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
+        .switch input { opacity: 0; width: 0; height: 0; }
 
         .slider {
             position: absolute;
             cursor: pointer;
             top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #E4DFEC;
-            transition: .3s cubic-bezier(0.4, 0, 0.2, 1);
+            background-color: #261717;
+            transition: .3s;
             border-radius: 34px;
         }
 
@@ -465,138 +307,124 @@
             left: 3px;
             bottom: 3px;
             background-color: white;
-            transition: .3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: .3s;
             border-radius: 50%;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        input:checked + .slider {
-            background-color: #8C61C7;
-        }
+        input:checked + .slider { background-color: #ff1a1a; }
+        input:checked + .slider:before { transform: translateX(22px); }
 
-        input:checked + .slider:before {
-            transform: translateX(22px);
-        }
-
-        /* กล่องข้อมูลสำหรับคัดลอก Proxy */
+        /* ส่วนคัดลอก Proxy */
         .copy-container {
             max-height: 0;
             opacity: 0;
             overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.4s ease;
             margin-top: 0;
         }
 
         .copy-container.show {
-            max-height: 180px;
+            max-height: 140px;
             opacity: 1;
-            margin-top: 12px;
-            margin-bottom: 6px;
+            margin-top: 14px;
         }
 
         .proxy-card {
-            background: #F4F0FA;
-            border: 1px dashed #C8B9E6;
-            border-radius: 16px;
-            padding: 14px;
+            background: #120c0c;
+            border: 1px dashed #552222;
+            border-radius: 14px;
+            padding: 12px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
         }
 
-        .proxy-details {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
+        .proxy-text {
             font-size: 13px;
-            color: #55536A;
-            font-weight: 600;
+            color: #cccccc;
         }
 
-        .proxy-details span strong {
-            color: #8C61C7;
-        }
+        .proxy-text strong { color: #ff1a1a; }
 
-        .copy-btn {
-            background: #8C61C7;
-            color: #FFF;
+        .btn-copy {
+            background: #ff1a1a;
+            color: white;
             border: none;
-            padding: 10px;
-            font-size: 13px;
+            padding: 8px;
+            font-size: 12px;
             font-weight: 700;
-            border-radius: 10px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .copy-btn:hover {
-            background: #7A51B3;
         }
 
         /* ---------------------------------- */
-        /* โซนปุ่มดาวน์โหลด/เครื่องมือด้านล่างเพิ่มเติม */
+        /* โซนปุ่มเมนูดาวน์โหลดด้านล่าง */
         /* ---------------------------------- */
-        .bottom-tools-section {
-            margin-top: 16px;
-            border-top: 1px solid #F0EDF5;
+        .bottom-menu {
+            margin-top: 20px;
+            border-top: 1px solid #221212;
             padding-top: 16px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 14px;
         }
 
-        .tools-title {
+        .section-label {
             font-size: 11px;
-            color: #A3A1BA;
+            color: #555555;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: -2px;
+            text-align: left;
+            margin-bottom: -4px;
         }
 
-        .btn-grid {
+        .grid-buttons {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
         }
 
-        .action-link-btn {
+        .menu-btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
-            background: #F7F5FC;
-            border: 1px solid #E8E5F0;
-            color: #55536A;
-            padding: 12px 10px;
+            background: #0c0c0c;
+            border: 1px solid #221212;
+            color: #aaaaaa;
+            padding: 12px;
             font-size: 13px;
             font-weight: 700;
-            border-radius: 14px;
+            border-radius: 12px;
             text-decoration: none;
-            cursor: pointer;
             transition: all 0.25s ease;
-            text-align: center;
         }
 
-        .action-link-btn:hover {
-            background: #ECE8F7;
-            border-color: #C8B9E6;
-            color: #8C61C7;
+        .menu-btn:hover {
+            border-color: #ff1a1a;
+            color: #ffffff;
+            background: #120505;
         }
 
-        .action-link-btn.primary-action {
-            background: linear-gradient(135deg, #FAF8FF 0%, #F1EDFA 100%);
-            border: 1px solid #D7CDEB;
-            color: #6C5299;
+        .menu-btn.highlight {
+            background: #140808;
+            border-color: #441111;
+            color: #ff4d4d;
+            grid-column: span 2;
         }
 
-        .action-link-btn.primary-action:hover {
-            background: #8C61C7;
-            color: #FFFFFF;
-            border-color: #8C61C7;
+        .menu-btn.highlight:hover {
+            background: #ff1a1a;
+            color: #ffffff;
+            border-color: #ff1a1a;
+            box-shadow: 0 0 10px rgba(255, 26, 26, 0.3);
+        }
+
+        .shake { animation: shakeEffect 0.4s ease; }
+        @keyframes shakeEffect {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-6px); }
+            40%, 80% { transform: translateX(6px); }
         }
     </style>
 </head>
@@ -604,126 +432,89 @@
 
     <div class="app-container">
         
-        <!-- ส่วนหัวข้อวงแหวนเหล็ก 3D -->
-        <div class="loader-wrapper">
-            <div class="glass-circle">
-                <span class="brand-initial">RP</span>
+        <!-- ล็อกอินการ์ดสไตล์ Cyberpunk ดำ-แดง -->
+        <div class="cyber-card" id="login-card">
+            
+            <div class="logo-wrapper">
+                <span class="logo-icon">R</span>
             </div>
-            <div class="svg-rotation-wrapper">
-                <svg class="svg-ring" width="160" height="160" viewBox="0 0 160 160">
-                    <defs>
-                        <linearGradient id="chromeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#8C61C7" />
-                            <stop offset="30%" stop-color="#A881C9" />
-                            <stop offset="65%" stop-color="#54D4CE" />
-                            <stop offset="100%" stop-color="#8C61C7" />
-                        </linearGradient>
-                    </defs>
-                    <circle class="ring-bg" cx="80" cy="80" r="70"></circle>
-                    <circle class="ring-flow" id="ring-progress" cx="80" cy="80" r="70"></circle>
+
+            <div class="brand-title">REALPOOH <span>PROXY</span></div>
+            <div class="brand-subtitle">Authentication Required</div>
+
+            <!-- ช่องใส่ KEY -->
+            <div class="input-group">
+                <input type="password" class="cyber-input" id="access-key" placeholder="ACCESS KEY">
+            </div>
+
+            <!-- ช่องใส่ UDID + ปุ่มดึงค่าเชื่อมลิงก์ภายนอกตามบรีฟใหม่ -->
+            <div class="row-inputs">
+                <input type="text" class="cyber-input" id="device-udid" placeholder="DEVICE UDID">
+                <!-- อัปเดต: เปลี่ยนเป็นแท็ก <a> เพื่อให้ลิงก์ตรงไปยังเว็บ udid.tech เมื่อกด -->
+                <a href="https://udid.tech/" class="btn-get-udid" target="_blank">GET UDID</a>
+            </div>
+
+            <!-- ปุ่มยืนยันเข้าใช้งานหลักสีแดงพรีเมียม -->
+            <button class="btn-authorize" onclick="validateKey()">
+                <span>AUTHORIZE ACCESS</span>
+                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
-            </div>
+            </button>
+
+            <div class="error-message" id="error-alert">คีย์ไม่ถูกต้องหรือหมดอายุ!</div>
         </div>
 
-        <div class="brand-section">
-            <div class="main-title">REALPOOH <span>PROXY</span></div>
-            <div class="sub-title">PREMIUM PROXY ACCESS</div>
-        </div>
-
-        <div class="status-box">
-            <div class="status-row" id="step-1"><div class="check-dot"></div>เชื่อมต่อเซิร์ฟเวอร์</div>
-            <div class="status-row" id="step-2"><div class="check-dot"></div>ตรวจสอบความปลอดภัย</div>
-            <div class="status-row" id="step-3"><div class="check-dot"></div>โหลดข้อมูล Proxy</div>
-            <div class="status-row" id="step-4"><div class="check-dot"></div>พร้อมใช้งาน</div>
-        </div>
-
-        <div class="progress-wrapper">
-            <div class="bar-outline"><div class="bar-fill" id="bar-fill"></div></div>
-            <div class="counter-num" id="counter-num">0%</div>
-        </div>
-
-        <!-- หน้าจอสำหรับใส่ KEY -->
-        <div class="overlay-screen" id="key-screen">
-            <div class="key-box" id="key-card">
-                <h2>ENTER ACCESS KEY</h2>
-                <p>กรุณากรอกคีย์เพื่อยืนยันตัวตนเปิดใช้งาน</p>
-                
-                <div class="input-wrapper">
-                    <input type="password" class="key-input" id="activation-key" placeholder="•••••••••••••••••">
-                    <button class="toggle-visibility" onclick="toggleKeyVisibility()" id="toggle-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                        </svg>
-                    </button>
-                </div>
-
-                <button class="submit-btn" onclick="checkKey()">VERIFY KEY</button>
-                <div class="error-message" id="error-msg">คีย์ไม่ถูกต้อง! กรุณาตรวจสอบอีกครั้ง</div>
-            </div>
-        </div>
-
-        <!-- หน้าควบคุมฟังก์ชันหลัก (Control Panel) -->
+        <!-- หน้าแผงควบคุมหลักหลังจากล็อกอินผ่านแล้ว -->
         <div class="overlay-screen" id="panel-screen">
-            <div class="panel-box">
-                <div class="panel-header">
-                    <h3>REALPOOH CONTROL PANEL</h3>
+            <div class="cyber-card">
+                <div class="panel-header-title">REALPOOH CONTROL PANEL</div>
+
+                <!-- กล่องวันหมดอายุ -->
+                <div class="expiry-box">
+                    <span class="expiry-title">อายุการใช้งานที่เหลือ</span>
+                    <span class="expiry-time" id="countdown-timer">2 วัน 14 ชม.</span>
                 </div>
 
-                <!-- ส่วนแสดงวันหมดอายุ ซ้าย - ขวา -->
-                <div class="expiry-container">
-                    <div class="expiry-left" id="expiry-days">2 วัน</div>
-                    <div class="expiry-right" id="expiry-countdown">14 ชม. 35 นาที 22 วิ</div>
-                </div>
-
-                <!-- ฟังก์ชันสวิตช์ยิงตัวโดนหัว -->
+                <!-- ฟังชั่นสวิตช์เปิดปิด -->
                 <div class="function-row">
                     <div class="function-info">
                         <span class="function-title">ยิงตัวโดนหัว (Auto Headshot)</span>
-                        <span class="function-desc">เปิดใช้งานฟังชั่นช่วยเล็งระดับพรีเมียม</span>
+                        <span class="function-desc">ระบบช่วยล็อกเป้าระดับ Premium</span>
                     </div>
                     <label class="switch">
-                        <input type="checkbox" id="function-toggle" onchange="handleToggleChange(this)">
+                        <input type="checkbox" id="feature-toggle" onchange="toggleProxyView(this)">
                         <span class="slider"></span>
                     </label>
                 </div>
 
-                <!-- กล่องแสดงข้อความคัดลอกเมื่อเปิดสวิตช์ -->
+                <!-- กล่องก๊อปปี้ Proxy -->
                 <div class="copy-container" id="copy-section">
                     <div class="proxy-card">
-                        <div class="proxy-details">
-                            <span><strong>เซิร์ฟเวอร์:</strong> 147.50.235.235</span>
-                            <span><strong>พอร์ต:</strong> 9998</span>
+                        <div class="proxy-text">
+                            <strong>Host:</strong> 147.50.235.235 &nbsp;|&nbsp; <strong>Port:</strong> 9998
                         </div>
-                        <button class="copy-btn" onclick="copyProxyToClipboard()" id="copy-btn">
-                            <span>คัดลอกข้อมูล Proxy</span>
-                        </button>
+                        <button class="btn-copy" onclick="copyProxy()" id="copy-btn">คัดลอกข้อมูล Proxy</button>
                     </div>
                 </div>
 
-                <!-- เพิ่ม: โซนเครื่องมือและลิงก์ช่วยเหลือด้านล่างสุด -->
-                <div class="bottom-tools-section">
-                    <span class="tools-title">เครื่องมือและการติดตั้ง</span>
-                    <div class="btn-grid">
-                        <!-- ปุ่มดึงค่า UDID -->
-                        <button class="action-link-btn primary-action" onclick="fetchUdidAction()">
-                            <span>ดึงค่า UDID</span>
-                        </button>
-                        <!-- ปุ่มโหลดใบรับรอง -->
-                        <a href="http://147.50.253.235/downloads/parkin.pem" class="action-link-btn primary-action" target="_blank">
-                            <span>โหลดใบรับรอง</span>
-                        </a>
-                    </div>
+                <!-- โซนปุ่มเมนูช่วยเหลือดาวน์โหลดด้านล่างสุด -->
+                <div class="bottom-menu">
+                    <span class="section-label">การติดตั้งและใบรับรอง</span>
+                    <!-- ปุ่มโหลดใบรับรอง -->
+                    <a href="http://147.50.253.235/downloads/parkin.pem" class="menu-btn highlight" target="_blank">
+                        📥 ดาวน์โหลดใบรับรอง
+                    </a>
 
-                    <span class="tools-title">ช่วยเหลือและแอปพลิเคชัน</span>
-                    <div class="btn-grid">
-                        <!-- ปุ่มคลิปสอนใช้งาน -->
-                        <a href="https://youtu.be/XcXYzDPB1-k?si=ZWmi643iFjlAhogY" class="action-link-btn" target="_blank">
-                            <span>🎬 คลิปสอนใช้งาน</span>
+                    <span class="section-label">คู่มือและแอปพลิเคชัน</span>
+                    <div class="grid-buttons">
+                        <!-- ปุ่มคลิปสอน -->
+                        <a href="https://youtu.be/XcXYzDPB1-k?si=ZWmi643iFjlAhogY" class="menu-btn" target="_blank">
+                            🎬 คลิปสอนใช้งาน
                         </a>
                         <!-- ปุ่มโหลดแอป Potatso -->
-                        <a href="https://apps.apple.com/th/app/potatso/id1239860606?l=th" class="action-link-btn" target="_blank">
-                            <span>🚀 โหลด Potatso</span>
+                        <a href="https://apps.apple.com/th/app/potatso/id1239860606?l=th" class="menu-btn" target="_blank">
+                            🚀 โหลด Potatso
                         </a>
                     </div>
                 </div>
@@ -734,153 +525,64 @@
     </div>
 
     <script>
-        // ระบบนับถอยหลังเวลาที่เหลือ
-        let totalSeconds = (14 * 3600) + (35 * 60) + 22; 
+        // ระบบนับถอยหลังเวลาใช้งาน
+        let timeRemaining = (2 * 24 * 3600) + (14 * 3600);
+        setInterval(() => {
+            if (timeRemaining <= 0) return;
+            timeRemaining--;
+            const days = Math.floor(timeRemaining / (24 * 3600));
+            const hrs = Math.floor((timeRemaining % (24 * 3600)) / 3600);
+            const mins = Math.floor((timeRemaining % 3600) / 60);
+            document.getElementById("countdown-timer").innerText = `${days} วัน ${hrs} ชม. ${mins} นาที`;
+        }, 60000);
 
-        function startCountdown() {
-            const countdownEl = document.getElementById("expiry-countdown");
-            const timer = setInterval(() => {
-                if (totalSeconds <= 0) {
-                    clearInterval(timer);
-                    countdownEl.innerText = "หมดอายุการใช้งาน";
-                    return;
-                }
-                totalSeconds--;
-                const hrs = Math.floor(totalSeconds / 3600);
-                const mins = Math.floor((totalSeconds % 3600) / 60);
-                const secs = totalSeconds % 60;
-                countdownEl.innerText = `${hrs} ชม. ${mins} นาที ${secs} วิ`;
-            }, 1000);
-        }
-
-        document.addEventListener("DOMContentLoaded", function() {
-            startCountdown();
-
-            const ring = document.getElementById("ring-progress");
-            const barFill = document.getElementById("bar-fill");
-            const counterNum = document.getElementById("counter-num");
-            const keyScreen = document.getElementById("key-screen");
-            
-            let percent = 0;
-            const circumference = 2 * Math.PI * 70; 
-            
-            ring.style.strokeDasharray = circumference;
-            ring.style.strokeDashoffset = circumference;
-
-            const steps = [
-                { limit: 25, id: "step-1" },
-                { limit: 50, id: "step-2" },
-                { limit: 75, id: "step-3" },
-                { limit: 100, id: "step-4" }
-            ];
-
-            const interval = setInterval(() => {
-                percent += Math.floor(Math.random() * 2) + 1;
-                if (percent >= 100) {
-                    percent = 100;
-                    clearInterval(interval);
-                    setTimeout(() => {
-                        keyScreen.classList.add("show");
-                    }, 600);
-                }
-                counterNum.innerText = percent + "%";
-                barFill.style.width = percent + "%";
-                const offset = circumference - (percent / 100) * circumference;
-                ring.style.strokeDashoffset = offset;
-
-                steps.forEach(step => {
-                    if (percent >= step.limit) {
-                        document.getElementById(step.id).classList.add("active");
-                    }
-                });
-            }, 40); 
-        });
-
-        function toggleKeyVisibility() {
-            const keyInput = document.getElementById("activation-key");
-            const toggleBtn = document.getElementById("toggle-btn");
-            if (keyInput.type === "password") {
-                keyInput.type = "text";
-                toggleBtn.innerHTML = `
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18" />
-                    </svg>
-                `;
-            } else {
-                keyInput.type = "password";
-                toggleBtn.innerHTML = `
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                    </svg>
-                `;
-            }
-        }
-
-        function checkKey() {
-            const keyInput = document.getElementById("activation-key");
-            const inputKey = keyInput.value.trim();
-            const errorMsg = document.getElementById("error-msg");
-            const keyScreen = document.getElementById("key-screen");
+        // ฟังก์ชันตรวจสอบ Key
+        function validateKey() {
+            const keyInput = document.getElementById("access-key").value.trim();
+            const errorAlert = document.getElementById("error-alert");
+            const loginCard = document.getElementById("login-card");
             const panelScreen = document.getElementById("panel-screen");
-            const keyCard = document.getElementById("key-card");
-            const daysDisplay = document.getElementById("expiry-days");
 
-            const keyPattern = /^proxy-roblox-[0-9]+day-.*$/;
-
-            if (keyPattern.test(inputKey)) {
-                const match = inputKey.match(/proxy-roblox-(\d+)day-/);
-                if (match && match[1]) {
-                    daysDisplay.innerText = match[1] + " วัน";
-                }
-                errorMsg.style.display = "none";
-                keyCard.classList.remove("shake");
-                keyScreen.classList.remove("show");
-                setTimeout(() => {
-                    panelScreen.classList.add("show");
-                }, 400);
+            if (keyInput.length > 0) {
+                errorAlert.style.display = "none";
+                panelScreen.classList.add("show");
             } else {
-                errorMsg.style.display = "block";
-                keyInput.style.borderColor = "#FF4D4D";
-                keyCard.classList.remove("shake");
-                void keyCard.offsetWidth; 
-                keyCard.classList.add("shake");
+                errorAlert.style.display = "block";
+                loginCard.classList.remove("shake");
+                void loginCard.offsetWidth;
+                loginCard.classList.add("shake");
             }
         }
 
-        function handleToggleChange(checkbox) {
+        // ฟังก์ชันเปิด/ปิด การแสดงกล่องก็อปปี้ Proxy
+        function toggleProxyView(checkbox) {
             const copySection = document.getElementById("copy-section");
             if (checkbox.checked) {
                 copySection.classList.add("show");
             } else {
                 copySection.classList.remove("show");
-                document.getElementById("copy-btn").style.background = "#8C61C7";
+                document.getElementById("copy-btn").style.background = "#ff1a1a";
                 document.getElementById("copy-btn").innerText = "คัดลอกข้อมูล Proxy";
             }
         }
 
-        function copyProxyToClipboard() {
-            const proxyText = "147.50.235.235:9998";
+        // ฟังก์ชันคัดลอก Proxy ลงคลิปบอร์ด
+        function copyProxy() {
+            const proxyData = "147.50.235.235:9998";
             const btn = document.getElementById("copy-btn");
             
-            navigator.clipboard.writeText(proxyText).then(() => {
-                btn.style.background = "#4CD080";
+            navigator.clipboard.writeText(proxyData).then(() => {
+                btn.style.background = "#00f0ff";
+                btn.style.color = "#000000";
                 btn.innerText = "✓ คัดลอกสำเร็จแล้ว!";
                 setTimeout(() => {
-                    if (document.getElementById("function-toggle").checked) {
-                        btn.style.background = "#8C61C7";
+                    if (document.getElementById("feature-toggle").checked) {
+                        btn.style.background = "#ff1a1a";
+                        btn.style.color = "#ffffff";
                         btn.innerText = "คัดลอกข้อมูล Proxy";
                     }
                 }, 2000);
-            }).catch(err => {
-                alert("เกิดข้อผิดพลาดในการคัดลอก: " + err);
             });
-        }
-
-        // ฟังก์ชันเมื่อกดดึงค่า UDID
-        function fetchUdidAction() {
-            // คุณสามารถใส่ลิงก์ลงทะเบียน UDID หรือคำสั่งดึงค่าอื่นตรงนี้ได้ครับ
-            alert("ระบบกำลังดึงข้อมูลอุปกรณ์เพื่อหาค่า UDID...");
         }
     </script>
 </body>
