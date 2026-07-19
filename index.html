@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>REALPOOH PROXY - Loading</title>
+    <title>REALPOOH PROXY - Premium Loading</title>
     <style>
         * {
             margin: 0;
@@ -23,12 +23,10 @@
             overflow: hidden;
         }
 
-        /* หน้าจอมือถือจำลองให้เหมือนแอปจริง */
         .app-container {
             width: 100%;
             max-width: 414px;
             height: 100vh;
-            /* ฉากหลังไล่สีละมุนแบบออร่าม่วง-ฟ้าตามรูป */
             background: radial-gradient(circle at 10% 10%, rgba(230, 215, 245, 0.7) 0%, transparent 40%),
                         radial-gradient(circle at 90% 80%, rgba(215, 235, 245, 0.8) 0%, transparent 50%),
                         #F8F6FA;
@@ -41,68 +39,91 @@
         }
 
         /* ---------------------------------- */
-        /* 1. วงแหวนโหลดเดอร์แบบ Glassmorphism */
+        /* วงแหวนเหล็กเมทัลลิก 3D แบบสมูธสุด ๆ */
         /* ---------------------------------- */
         .loader-wrapper {
             position: relative;
-            width: 160px;
-            height: 160px;
+            width: 170px;
+            height: 170px;
             display: flex;
             justify-content: center;
             align-items: center;
             margin-bottom: 45px;
         }
 
-        /* แผ่นกระจกทรงกลมตรงกลาง + เงาซ้อนนุ่ม ๆ */
+        /* ปุ่มตรงกลางสไตล์กระจกนูนเงาเหล็ก */
         .glass-circle {
             position: absolute;
-            width: 115px;
-            height: 115px;
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            width: 110px;
+            height: 110px;
+            background: linear-gradient(135deg, #ffffff 0%, #e2d9f3 50%, #c8b9e6 100%);
             border-radius: 50%;
-            box-shadow: 0 10px 30px rgba(168, 129, 201, 0.2), 
-                        inset 0 2px 4px rgba(255, 255, 255, 0.6);
+            /* สร้างมิติขอบเหล็กหนาเงาวาว */
+            box-shadow: 
+                0 15px 35px rgba(108, 82, 153, 0.25),
+                inset 0 4px 10px rgba(255, 255, 255, 0.9),
+                inset 0 -4px 10px rgba(108, 82, 153, 0.2),
+                0 0 0 6px rgba(255, 255, 255, 0.5); 
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 2;
+            z-index: 3;
         }
 
-        /* อักษรย่อ RP */
         .brand-initial {
-            font-size: 30px;
-            font-weight: 750;
-            color: #6C5299;
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #4A3570 0%, #8C61C7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             letter-spacing: -0.5px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
         }
 
-        /* SVG วงแหวนสถานะ */
-        .svg-ring {
+        /* ตัวครอบ SVG ให้หมุนแบบนุ่มนวลตลอดเวลา (Linear Smooth) */
+        .svg-rotation-wrapper {
             position: absolute;
-            transform: rotate(-90deg);
-            z-index: 1;
+            width: 160px;
+            height: 160px;
+            z-index: 2;
+            animation: smooth-spin 2.5s linear infinite; /* หมุนโครงสร้างหลักเบา ๆ */
         }
 
+        .svg-ring {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        /* วงแหวนร่องเหล็กด้านหลัง */
         .ring-bg {
             fill: none;
-            stroke: #EBE6F2;
-            stroke-width: 7;
+            stroke: #E4DFEC;
+            stroke-width: 9;
+            /* เพิ่มมิติหลุมเหล็ก */
+            filter: drop-shadow(inset 0 1px 3px rgba(0,0,0,0.1)); 
         }
 
+        /* วงแหวนโหลดจริงไล่เฉดเหล็กนีออนเงา */
         .ring-flow {
             fill: none;
-            stroke: url(#gradientColors);
-            stroke-width: 7;
+            stroke: url(#chromeGradient);
+            stroke-width: 9;
             stroke-linecap: round;
             stroke-dasharray: 440;
             stroke-dashoffset: 440;
-            transition: stroke-dashoffset 0.08s linear;
+            /* ใช้ cubic-bezier เพื่อความสมูธในการเคลี่อนที่ขยับตาม % */
+            transition: stroke-dashoffset 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* แอนิเมชันหมุนโครงเหล็กแบบลื่นไหลลื่นปรื๊ด */
+        @keyframes smooth-spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         /* ---------------------------------- */
-        /* 2. ส่วนของชื่อแบรนด์ */
+        /* ส่วนข้อความและส่วนอื่น ๆ คงเดิม */
         /* ---------------------------------- */
         .brand-section {
             text-align: center;
@@ -118,7 +139,7 @@
         }
 
         .main-title span {
-            color: #8C61C7; /* สีม่วงเด่นที่คำว่า PROXY */
+            color: #8C61C7;
         }
 
         .sub-title {
@@ -129,9 +150,6 @@
             font-weight: 700;
         }
 
-        /* ---------------------------------- */
-        /* 3. รายการเช็คสถานะการโหลด */
-        /* ---------------------------------- */
         .status-box {
             width: 100%;
             max-width: 260px;
@@ -150,7 +168,6 @@
             transition: color 0.3s ease;
         }
 
-        /* วงกลมไอคอนเปล่า */
         .check-dot {
             width: 20px;
             height: 20px;
@@ -162,7 +179,6 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* สไตล์เมื่อโหลดสเต็ปนั้นผ่านแล้ว */
         .status-row.active {
             color: #4B495E;
         }
@@ -170,9 +186,9 @@
         .status-row.active .check-dot {
             background-color: #E2F6E7;
             border-color: #4CD080;
+            box-shadow: 0 0 8px rgba(76, 208, 128, 0.4);
         }
 
-        /* ใส่เครื่องหมายติ๊กถูกสีเขียว */
         .status-row.active .check-dot::after {
             content: '';
             position: absolute;
@@ -185,9 +201,6 @@
             transform: rotate(45deg);
         }
 
-        /* ---------------------------------- */
-        /* 4. แถบความคืบหน้า (Progress Bar) */
-        /* ---------------------------------- */
         .progress-wrapper {
             width: 100%;
             max-width: 280px;
@@ -208,7 +221,7 @@
             width: 0%;
             background: linear-gradient(90deg, #8C61C7, #A881C9);
             border-radius: 10px;
-            transition: width 0.08s linear;
+            transition: width 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .counter-num {
@@ -217,9 +230,6 @@
             font-weight: 600;
         }
 
-        /* ---------------------------------- */
-        /* 5. เมนู 3 ตัวเลือก (จะเด้งมาหลัง 100%) */
-        /* ---------------------------------- */
         .menu-overlay {
             position: absolute;
             top: 0;
@@ -304,31 +314,34 @@
 
     <div class="app-container">
         
-        <!-- 1. วงแหวนโหลดเดอร์กลางจอ -->
+        <!-- ส่วนหัวข้อวงแหวนเหล็ก 3D -->
         <div class="loader-wrapper">
             <div class="glass-circle">
                 <span class="brand-initial">RP</span>
             </div>
-            <svg class="svg-ring" width="144" height="144" viewBox="0 0 150 150">
-                <defs>
-                    <!-- ไล่เฉดสีม่วงไปฟ้าตามต้นฉบับรูปภาพ -->
-                    <linearGradient id="gradientColors" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#8C61C7" />
-                        <stop offset="100%" stop-color="#54D4CE" />
-                    </linearGradient>
-                </defs>
-                <circle class="ring-bg" cx="75" cy="75" r="65"></circle>
-                <circle class="ring-flow" id="ring-progress" cx="75" cy="75" r="65"></circle>
-            </svg>
+            <!-- ตัวครอบเพิ่มแอนิเมชันการหมุนสมูธควงสว่าน -->
+            <div class="svg-rotation-wrapper">
+                <svg class="svg-ring" width="160" height="160" viewBox="0 0 160 160">
+                    <defs>
+                        <!-- การไล่เฉดสีสไตล์ Chrome เมทัลลิกวาว ๆ -->
+                        <linearGradient id="chromeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#8C61C7" />
+                            <stop offset="30%" stop-color="#A881C9" />
+                            <stop offset="65%" stop-color="#54D4CE" />
+                            <stop offset="100%" stop-color="#8C61C7" />
+                        </linearGradient>
+                    </defs>
+                    <circle class="ring-bg" cx="80" cy="80" r="70"></circle>
+                    <circle class="ring-flow" id="ring-progress" cx="80" cy="80" r="70"></circle>
+                </svg>
+            </div>
         </div>
 
-        <!-- 2. ชื่อระบบ -->
         <div class="brand-section">
             <div class="main-title">REALPOOH <span>PROXY</span></div>
             <div class="sub-title">PREMIUM PROXY ACCESS</div>
         </div>
 
-        <!-- 3. รายการสถานะ -->
         <div class="status-box">
             <div class="status-row" id="step-1">
                 <div class="check-dot"></div>
@@ -348,7 +361,6 @@
             </div>
         </div>
 
-        <!-- 4. แถบความคืบหน้าด้านล่าง -->
         <div class="progress-wrapper">
             <div class="bar-outline">
                 <div class="bar-fill" id="bar-fill"></div>
@@ -356,7 +368,6 @@
             <div class="counter-num" id="counter-num">0%</div>
         </div>
 
-        <!-- 5. หน้าจอเมนู 3 ตัวเลือกที่จะเด้งสไลด์ขึ้นมาเมื่อครบ 100% -->
         <div class="menu-overlay" id="menu-overlay">
             <div class="menu-title">REALPOOH <span>PROXY</span></div>
             <div class="menu-btn-list">
@@ -376,10 +387,9 @@
             const menuOverlay = document.getElementById("menu-overlay");
             
             let percent = 0;
-            // ความยาวเส้นรอบวงคำนวณจาก 2 * PI * r (2 * 3.14159 * 65 = ~408.4)
-            const circumference = 2 * Math.PI * 65; 
+            // เส้นรอบวงคำนวณใหม่จากรัศมี r=70 (2 * Math.PI * 70 = ~439.8)
+            const circumference = 2 * Math.PI * 70; 
             
-            // ตั้งค่าเริ่มต้นของวงแหวนให้ว่างเปล่า
             ring.style.strokeDasharray = circumference;
             ring.style.strokeDashoffset = circumference;
 
@@ -390,41 +400,36 @@
                 { limit: 100, id: "step-4" }
             ];
 
+            // ปรับระดับความเร่งให้นุ่มนวลแบบมีไดนามิก
             const interval = setInterval(() => {
-                // สุ่มเพิ่มทีละ 1 ถึง 3 เปอร์เซ็นต์เพิ่มความสมจริง
-                percent += Math.floor(Math.random() * 3) + 1;
+                percent += Math.floor(Math.random() * 2) + 1;
                 
                 if (percent >= 100) {
                     percent = 100;
                     clearInterval(interval);
                     
-                    // เมื่อโหลดเสร็จสมบูรณ์ หน่วงเวลาสั้น ๆ แล้วเปิดหน้าเมนูขึ้นมา
                     setTimeout(() => {
                         menuOverlay.classList.add("show");
                     }, 600);
                 }
 
-                // อัปเดตข้อความตัวเลขและแถบโหลด
                 counterNum.innerText = percent + "%";
                 barFill.style.width = percent + "%";
 
-                // คำนวณขยับอนิเมชันวงแหวน
                 const offset = circumference - (percent / 100) * circumference;
                 ring.style.strokeDashoffset = offset;
 
-                // ติ๊กถูกสถานะแต่ละขั้น
                 steps.forEach(step => {
                     if (percent >= step.limit) {
                         document.getElementById(step.id).classList.add("active");
                     }
                 });
 
-            }, 40); // ปรับความเร็วในการโหลดตรงนี้ (ค่าน้อยจะโหลดไวขึ้น)
+            }, 50); 
         });
 
         function actionMenu(name) {
             alert("คุณได้เลือกใช้งาน: " + name);
-            // สามารถเปลี่ยนเป็นลิงก์ไปหน้าอื่นได้ เช่น window.location.href = 'หน้าเว็บของคุณ.html';
         }
     </script>
 </body>
