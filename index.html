@@ -453,7 +453,7 @@
             <div class="brand-title">REALPOOH <span>PROXY</span></div>
             <div class="brand-subtitle">✨ ยินดีต้อนรับ! กรุณายืนยันตัวตนนะ ✨</div>
 
-            <!-- ช่องใส่ KEY (เปลี่ยนเป็น type="password" เพื่อซ่อนคีย์เพื่อความเป็นส่วนตัว) -->
+            <!-- ช่องใส่ KEY (ปิดซ่อนคีย์ ป้องกันความเป็นส่วนตัว 100%) -->
             <div class="input-group">
                 <input type="password" class="cyber-input" id="access-key" placeholder="🔑 กรอกคีย์เปิดใช้งานระบบที่นี่">
             </div>
@@ -555,7 +555,7 @@
             countdownInterval = setInterval(updateDisplay, 60000);
         }
 
-        // ฟังก์ชันตรวจสอบ Key (รองรับทั้ง d=วัน และ m=เดือน และสุ่มตัวเลขต่อท้าย)
+        // ฟังก์ชันตรวจสอบคีย์ตามเงื่อนไข: pooh-[ตัวเลข]day-proxy[ตัวเลข 4 หลัก]
         function validateKey() {
             const keyInput = document.getElementById("access-key").value.trim();
             const udidInput = document.getElementById("device-udid").value.trim();
@@ -563,19 +563,14 @@
             const loginCard = document.getElementById("login-card");
             const panelScreen = document.getElementById("panel-screen");
 
-            // Regular Expression: ตรวจจับ pooh-[ตัวเลข][d หรือ m]-proxy[ตัวเลขเท่าไหร่ก็ได้]
-            const keyPattern = /^pooh-(\d+)([dm])-proxy\d+$/;
+            // Regular Expression เจาะจงคีย์: pooh-(เลขกี่ตัวก็ได้)day-proxy(เลข 4 ตัวแป๊ะๆ)
+            const keyPattern = /^pooh-(\d+)day-proxy\d{4}$/;
             const match = keyInput.match(keyPattern);
 
             if (match && udidInput.length > 0) {
-                const amount = parseInt(match[1]); // จำนวนเลขวันหรือเดือน
-                const unit = match[2];             // หน่วย 'd' หรือ 'm'
+                const daysAmount = parseInt(match[1]); // ดึงตัวเลขจำนวนวันออกมา
 
-                if (unit === 'd') {
-                    timeRemaining = amount * 24 * 3600; // แปลงวันเป็นวินาที
-                } else if (unit === 'm') {
-                    timeRemaining = amount * 30 * 24 * 3600; // แปลงเดือน (ตีเฉลี่ย 30 วัน) เป็นวินาที
-                }
+                timeRemaining = daysAmount * 24 * 3600; // แปลงวันเป็นวินาทีเพื่อรันระบบนับถอยหลัง
 
                 errorAlert.style.display = "none";
                 panelScreen.classList.add("show");
@@ -588,7 +583,6 @@
             }
         }
 
-        // ฟังก์ชันเปิด/ปิด การแสดงกล่องก็อปปี้ Proxy
         function toggleProxyView(checkbox) {
             const copySection = document.getElementById("copy-section");
             if (checkbox.checked) {
@@ -600,7 +594,6 @@
             }
         }
 
-        // ฟังก์ชันคัดลอก Proxy ลงคลิปบอร์ด
         function copyProxy() {
             const proxyData = "147.50.235.235:9998";
             const btn = document.getElementById("copy-btn");
