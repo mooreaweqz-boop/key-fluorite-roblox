@@ -2,193 +2,741 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>REALPOOH PROXY</title>
-    <!-- นำเข้าฟอนต์ Itim สุดน่ารัก -->
-    <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
+    <!-- นำเข้าฟอนต์น่ารักๆ มนๆ จาก Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;700&family=Mitr:wght@400;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        * { box-sizing: border-box; }
-        body { 
-            background-color: #000; 
-            font-family: 'Itim', cursive, sans-serif;
-            display: flex; justify-content: center; align-items: center; 
-            min-height: 100vh; margin: 0; padding: 20px; 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Mitr', 'Kanit', -apple-system, sans-serif;
+            -webkit-font-smoothing: antialiased;
         }
-        .card { 
-            background-color: #0d0d0d; border: 2px solid #3a0b0b; border-radius: 35px; 
-            padding: 40px 30px; width: 100%; max-width: 400px; text-align: center; 
-            box-shadow: 0 0 25px rgba(255, 50, 50, 0.2); 
-        }
-        .logo-container { 
-            width: 120px; height: 120px; margin: 0 auto 20px auto; 
-            border-radius: 50%; border: 3px solid #ff3333; 
-            box-shadow: 0 0 15px rgba(255, 51, 51, 0.5);
-            display: flex; justify-content: center; align-items: center; 
-            background-color: #141414;
+
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
             overflow: hidden;
         }
-        .logo-container img {
+
+        .app-container {
+            width: 100%;
+            max-width: 414px;
+            height: 100vh;
+            background-color: #000000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            position: relative;
+        }
+
+        /* ---------------------------------- */
+        /* การ์ดสไตล์ Cyberpunk ตามรูปภาพ */
+        /* ---------------------------------- */
+        .cyber-card {
+            width: 100%;
+            max-width: 360px;
+            background: linear-gradient(145deg, #070202 0%, #0d0505 100%);
+            border: 2px solid #300c0c;
+            border-radius: 28px;
+            padding: 35px 24px;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.15);
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* 👑 วงกลมโลโก้ขยับได้ (Animated Logo Custom) */
+        .logo-container-wrapper {
+            position: relative;
+            width: 108px;
+            height: 108px;
+            margin: 0 auto 20px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            background: padding-box, linear-gradient(0deg, #ff0000, #300c0c);
+            padding: 3px;
+            box-shadow: 0 0 25px rgba(255, 26, 26, 0.4);
+        }
+
+        /* แอนิเมชันวงแหวนหมุนรอบโลโก้ */
+        .logo-container-wrapper::before {
+            content: '';
+            position: absolute;
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            border-radius: 50%;
+            background: conic-gradient(transparent, transparent, transparent, #ff1a1a);
+            animation: rotateRing 4s linear infinite;
+            z-index: 0;
         }
-        .title { color: #fff; font-size: 30px; font-weight: bold; margin: 0 0 5px 0; letter-spacing: 1px; }
-        .title span { color: #ff3333; }
-        .subtitle { color: #d4af37; font-size: 15px; margin-bottom: 30px; }
-        .input-group { margin-bottom: 20px; text-align: left; }
-        .input-label { color: #aaa; font-size: 14px; margin-bottom: 8px; display: block; padding-left: 5px; }
-        .input-field { 
-            width: 100%; background-color: #141414; border: 1px solid #262626; 
-            border-radius: 18px; padding: 15px; color: #fff; font-size: 18px; 
-            text-align: center; transition: 0.3s;
+
+        .logo-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: #050505;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            z-index: 1;
+            /* แอนิเมชันจังหวะหายใจเข้าออกชีพจร */
+            animation: logoPulse 3s ease-in-out infinite;
         }
-        .input-field:focus { border-color: #ff3333; outline: none; }
-        .submit-btn { 
-            width: 100%; background: linear-gradient(180deg, #ff3333 0%, #cc0000 100%); 
-            border: none; border-radius: 20px; padding: 15px; color: white; 
-            font-size: 20px; cursor: pointer; transition: 0.2s; margin-top: 10px;
-            box-shadow: 0 5px 15px rgba(255, 51, 51, 0.3);
-            font-family: 'Itim', cursive, sans-serif;
+
+        .logo-image {
+            width: 90%;
+            height: 90%;
+            object-fit: contain;
+            border-radius: 50%;
         }
-        .submit-btn:hover { transform: scale(1.02); box-shadow: 0 5px 20px rgba(255, 51, 51, 0.5); }
-        .submit-btn:active { transform: scale(0.98); }
-        
-        #resultArea { 
-            margin-top: 25px; color: #fff; display: none; padding: 20px; 
-            border-radius: 20px; background: #1a0505; border: 1.5px dashed #ff3333;
-            text-align: left;
+
+        /* Keyframes แอนิเมชันโลโก้ */
+        @keyframes rotateRing {
+            100% { transform: rotate(360deg); }
         }
-        
-        .key-list {
-            margin: 10px 0;
-            padding-left: 0;
-            list-style: none;
+        @keyframes logoPulse {
+            0%, 100% { transform: scale(1); box-shadow: inset 0 0 15px rgba(255,0,0,0.2); }
+            50% { transform: scale(1.04); box-shadow: inset 0 0 25px rgba(255,0,0,0.5); }
         }
-        .key-item {
-            background: #2b0b0b;
-            padding: 12px 15px;
-            border-radius: 12px;
-            margin-bottom: 6px;
-            font-size: 20px;
-            color: #ffeb3b;
-            word-break: break-all;
-            border: 1px solid #441111;
+
+        /* ชื่อแอปสไตล์ทูโทน */
+        .brand-title {
+            font-size: 26px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+        }
+
+        .brand-title span {
+            color: #ff1a1a;
+            text-shadow: 0 0 10px rgba(255, 26, 26, 0.4);
+        }
+
+        .brand-subtitle {
+            font-size: 13px;
+            color: #8c8c8c;
+            margin-top: 5px;
+            margin-bottom: 30px;
+            font-family: 'Kanit', sans-serif;
+            font-weight: 400;
+        }
+
+        /* ---------------------------------- */
+        /* ช่องกรอกข้อมูล (Inputs) */
+        /* ---------------------------------- */
+        .input-group {
+            width: 100%;
+            margin-bottom: 16px;
+        }
+
+        .cyber-input {
+            width: 100%;
+            background-color: #0c0c0c;
+            border: 1.5px solid #221212;
+            border-radius: 14px;
+            padding: 16px 20px;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 600;
+            outline: none;
             text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+            font-family: 'Kanit', sans-serif;
+        }
+
+        .cyber-input::placeholder { color: #555555; }
+        .cyber-input:focus {
+            border-color: #ff1a1a;
+            box-shadow: 0 0 12px rgba(255, 26, 26, 0.3);
+            background-color: #120505;
+        }
+
+        /* แถวสองคอลัมน์ */
+        .row-inputs {
+            display: grid;
+            grid-template-columns: 1.7fr 1fr;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .btn-get-udid {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #0c0c0c;
+            border: 2px solid #00f0ff;
+            border-radius: 14px;
+            color: #00f0ff;
+            font-size: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.1);
+            user-select: none;
+        }
+
+        .btn-get-udid:hover {
+            background-color: #00f0ff;
+            color: #000000;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+        }
+
+        /* ปุ่มกดหลักสีแดงเรืองแสง */
+        .btn-authorize {
+            width: 100%;
+            background: linear-gradient(135deg, #ff0000 0%, #b30000 100%);
+            border: none;
+            border-radius: 16px;
+            padding: 16px;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 6px 20px rgba(255, 0, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-authorize:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 0, 0, 0.6);
+        }
+
+        .error-message {
+            color: #ff4d4d;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 12px;
+            display: none;
+            font-family: 'Kanit', sans-serif;
+        }
+
+        /* ---------------------------------- */
+        /* ✨ หน้าจอหลักแผงควบคุมระดับท็อป (NEW UI) */
+        /* ---------------------------------- */
+        .overlay-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 10;
+        }
+
+        .overlay-screen.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* ปรับปรุงดีไซน์การ์ดด้านในให้สวย มีมิติแบบกระจกนีออน */
+        .panel-card {
+            background: linear-gradient(165deg, #0e0505 0%, #050202 100%);
+            border: 2px solid #4a1212;
+            box-shadow: 0 0 35px rgba(255, 26, 26, 0.25), inset 0 0 20px rgba(255, 0, 0, 0.05);
+        }
+
+        .panel-header-title {
+            font-size: 19px;
+            color: #ffffff;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            position: relative;
+            display: inline-block;
+        }
+
+        .panel-header-title::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 25%;
+            width: 50%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ff1a1a, transparent);
+        }
+
+        /* ปรับดีไซน์กล่องเวลาคงเหลือ */
+        .expiry-box {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            background: linear-gradient(135deg, #1f0a0a 0%, #120404 100%);
+            border: 1px solid #5e1919;
+            padding: 16px;
+            border-radius: 18px;
+            margin-bottom: 20px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
+        }
+
+        .expiry-title {
+            color: #ff4d4d;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .expiry-time {
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 700;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+            font-family: 'Kanit', sans-serif;
+        }
+
+        /* ปรับดีไซน์ฟังก์ชันแถวสวิตช์เปิดปิด */
+        .function-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #090909;
+            border: 1px solid #261212;
+            padding: 18px;
+            border-radius: 18px;
+            transition: border-color 0.3s ease;
         }
         
-        .copy-btn {
-            width: 100%; background: #2b0b0b; border: 1px dashed #ff3333; 
-            border-radius: 15px; padding: 12px; color: #ffeb3b; 
-            font-size: 16px; cursor: pointer; transition: 0.2s; 
-            margin-top: 15px; font-family: 'Itim', cursive, sans-serif;
+        .function-row:focus-within, .function-row:hover {
+            border-color: #ff1a1a;
         }
-        .copy-btn:hover { background: #441111; }
-        
-        .error-msg { color: #ff3333; font-size: 14px; margin-top: 25px; }
+
+        .function-info {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            gap: 3px;
+        }
+
+        .function-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .function-desc {
+            font-size: 11px;
+            color: #888888;
+            font-family: 'Kanit', sans-serif;
+        }
+
+        /* สวิตช์ Apple Style */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 48px;
+            height: 26px;
+        }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #261717;
+            transition: .3s;
+            border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .3s;
+            border-radius: 50%;
+        }
+        input:checked + .slider { background-color: #ff1a1a; box-shadow: 0 0 10px rgba(255, 26, 26, 0.5); }
+        input:checked + .slider:before { transform: translateX(22px); }
+
+        /* ส่วนคัดลอก Proxy */
+        .copy-container {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 0;
+        }
+
+        .copy-container.show {
+            max-height: 140px;
+            opacity: 1;
+            margin-top: 16px;
+        }
+
+        .proxy-card {
+            background: linear-gradient(135deg, #0e0505 0%, #170707 100%);
+            border: 1px dashed #ff3333;
+            border-radius: 16px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.1);
+        }
+
+        .proxy-text {
+            font-size: 13px;
+            color: #e0e0e0;
+            font-family: 'Kanit', sans-serif;
+        }
+        .proxy-text strong { color: #ff3333; }
+
+        .btn-copy {
+            background: linear-gradient(90deg, #ff1a1a 0%, #b30000 100%);
+            color: white;
+            border: none;
+            padding: 11px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Mitr', sans-serif;
+            box-shadow: 0 4px 10px rgba(255, 26, 26, 0.3);
+            transition: all 0.2s ease;
+        }
+        .btn-copy:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 14px rgba(255, 26, 26, 0.4);
+        }
+
+        /* โซนปุ่มเมนูดาวน์โหลดด้านล่าง */
+        .bottom-menu {
+            margin-top: 24px;
+            border-top: 1px dashed #3a1515;
+            padding-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .section-label {
+            font-size: 11px;
+            color: #777777;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            text-align: left;
+            margin-bottom: -4px;
+            font-family: 'Kanit', sans-serif;
+        }
+
+        .grid-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .menu-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #090909;
+            border: 1px solid #261212;
+            color: #bbbbbb;
+            padding: 13px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 14px;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+
+        .menu-btn:hover {
+            border-color: #ff1a1a;
+            color: #ffffff;
+            background: #140505;
+        }
+
+        .menu-btn.highlight {
+            background: linear-gradient(90deg, #1f0808 0%, #120404 100%);
+            border-color: #6e1a1a;
+            color: #ff4d4d;
+            grid-column: span 2;
+            box-shadow: 0 2px 8px rgba(255, 0, 0, 0.05);
+        }
+
+        .menu-btn.highlight:hover {
+            background: linear-gradient(90deg, #ff1a1a 0%, #cc0000 100%);
+            color: #ffffff;
+            border-color: #ff1a1a;
+            box-shadow: 0 0 15px rgba(255, 26, 26, 0.4);
+        }
+
+        .shake { animation: shakeEffect 0.4s ease; }
+        @keyframes shakeEffect {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-6px); }
+            40%, 80% { transform: translateX(6px); }
+        }
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <div class="logo-container">
-            <img src="https://cdn.discordapp.com/attachments/1528247158069792863/1528249908845351042/IMG_1880.png?ex=6a5d9d23&is=6a5c4ba3&hm=1258cef0d3504e6bfe263a18198e3ae78fd2238c6bd69536c54b77deba2388a1&" alt="REALPOOH LOGO">
-        </div>
-        <h1 class="title">REALPOOH <span>PROXY</span></h1>
-        <div class="subtitle">✨ ยินดีต้อนรับ! กรุณาเลือกจำนวนวันนะ ✨</div>
-
-        <div class="input-group">
-            <label class="input-label">📅 เลือกจำนวนวันที่ต้องการรับคีย์ (1 - 9999 วัน)</label>
-            <input type="number" id="daysInput" min="1" max="9999" value="30" class="input-field">
-        </div>
-
-        <!-- เอาช่องกรอกจำนวนคีย์ออกไปแล้ว -->
-
-        <button class="submit-btn" onclick="generateKey()">รับคีย์ 🚀</button>
-
-        <div id="resultArea">
-            <div style="font-weight: bold; color: #ff3333; text-align: center;">🎉 รับคีย์สำเร็จแล้วงับ!</div>
-            <ul id="keyList" class="key-list"></ul>
-            <div id="keyDetails" style="font-size: 14px; color: #bbb; margin-top: 10px; border-top: 1px dashed #441111; padding-top: 10px; text-align: center;"></div>
+    <div class="app-container">
+        
+        <!-- ล็อกอินการ์ดสไตล์ Cyberpunk ดำ-แดง -->
+        <div class="cyber-card" id="login-card">
             
-            <button class="copy-btn" id="copyBtn" onclick="copyAllKeys()">📋 คัดลอกคีย์</button>
+            <!-- โครงสร้างครอบโลโก้แบบใหม่พร้อมแอนิเมชัน -->
+            <div class="logo-container-wrapper">
+                <div class="logo-wrapper">
+                    <img src="https://cdn.discordapp.com/attachments/1528247158069792863/1528249908845351042/IMG_1880.png?ex=6a5d9d23&is=6a5c4ba3&hm=1258cef0d3504e6bfe263a18198e3ae78fd2238c6bd69536c54b77deba2388a1&" alt="Logo" class="logo-image">
+                </div>
+            </div>
+
+            <div class="brand-title">REALPOOH <span>PROXY</span></div>
+            <div class="brand-subtitle">✨ ยินดีต้อนรับ! กรุณายืนยันตัวตนนะ ✨</div>
+
+            <!-- ช่องใส่ KEY -->
+            <div class="input-group">
+                <input type="password" class="cyber-input" id="access-key" placeholder="🔑 กรอกคีย์เปิดใช้งานระบบที่นี่">
+            </div>
+
+            <!-- ช่องใส่ UDID -->
+            <div class="row-inputs">
+                <input type="text" class="cyber-input" id="device-udid" placeholder="📱 DEVICE UDID">
+                <a href="https://udid.tech/" class="btn-get-udid" target="_blank">GET UDID</a>
+            </div>
+
+            <!-- ปุ่มยืนยันเข้าใช้งานหลัก -->
+            <button class="btn-authorize" onclick="validateKey()">
+                <span>เปิดระบบเลยยย 🚀</span>
+            </button>
+
+            <div class="error-message" id="error-alert">งื้อออ คีย์ไม่ถูกต้องหรือหมดอายุแล้วงับ! 😭</div>
         </div>
 
-        <div class="error-msg" id="errorMsg" style="display:none;">กรุณาระบุจำนวนวันให้ถูกต้องนะงับ! 😭</div>
+        <!-- หน้าจอหลักแผงควบคุมหลังยืนยันตัวตน (NEW DESIGN UI) -->
+        <div class="overlay-screen" id="panel-screen">
+            <div class="cyber-card panel-card">
+                <div class="panel-header-title">⭐ REALPOOH CONTROL PANEL ⭐</div>
+
+                <!-- กล่องวันหมดอายุแบบหรูหรา -->
+                <div class="expiry-box">
+                    <span class="expiry-title">⏳ เวลาการใช้งานคงเหลือ</span>
+                    <span class="expiry-time" id="countdown-timer">กำลังคำนวณ...</span>
+                </div>
+
+                <!-- ฟังชั่นสวิตช์เปิดปิด -->
+                <div class="function-row">
+                    <div class="function-info">
+                        <span class="function-title">🎯 ยิงตัวโดนหัว (Auto Headshot)</span>
+                        <span class="function-desc">ระบบช่วยล็อกเป้าระดับ Premium</span>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="feature-toggle" onchange="toggleProxyView(this)">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <!-- กล่องก๊อปปี้ Proxy สไตล์ใหม่ -->
+                <div class="copy-container" id="copy-section">
+                    <div class="proxy-card">
+                        <div class="proxy-text">
+                            <strong>Host:</strong> 147.50.235.235 &nbsp;|&nbsp; <strong>Port:</strong> 9998
+                        </div>
+                        <button class="btn-copy" onclick="copyProxy()" id="copy-btn">📋 คัดลอก Proxy ได้เลยงับ</button>
+                    </div>
+                </div>
+
+                <!-- โซนปุ่มเมนูช่วยเหลือดาวน์โหลดด้านล่างสุด -->
+                <div class="bottom-menu">
+                    <span class="section-label">⚙️ การติดตั้งและใบรับรอง</span>
+                    <!-- ปุ่มโหลดใบรับรอง -->
+                    <a href="http://147.50.253.235/downloads/parkin.pem" class="menu-btn highlight" target="_blank">
+                        📥 ดาวน์โหลดใบรับรองที่นี่น้า
+                    </a>
+
+                    <span class="section-label">📚 คู่มือและแอปพลิเคชัน</span>
+                    <div class="grid-buttons">
+                        <!-- ปุ่มคลิปสอน -->
+                        <a href="https://youtu.be/XcXYzDPB1-k?si=ZWmi643iFjlAhogY" class="menu-btn" target="_blank">
+                            🎬 คลิปสอนใช้งานนะ
+                        </a>
+                        <!-- ปุ่มโหลดแอป Potatso -->
+                        <a href="https://apps.apple.com/th/app/potatso/id1239860606?l=th" class="menu-btn" target="_blank">
+                            🚀 โหลดแอป Potatso
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
     </div>
 
     <script>
-        // ระบบจดจำคีย์กันซ้ำ
-        const usedKeysTracker = new Set(JSON.parse(localStorage.getItem('poohProxyKeys')) || []);
-        let currentGeneratedKeys = [];
+        let countdownInterval;
 
-        function generateKey() {
-            const days = document.getElementById('daysInput').value;
-            const amount = 1; // ล็อกให้สร้างทีละ 1 คีย์ต่อการกด 1 ครั้ง
-            const resultArea = document.getElementById('resultArea');
-            const keyList = document.getElementById('keyList');
-            const keyDetails = document.getElementById('keyDetails');
-            const errorMsg = document.getElementById('errorMsg');
-            const copyBtn = document.getElementById('copyBtn');
+        function getBlacklist() {
+            const list = localStorage.getItem("key_blacklist");
+            return list ? JSON.parse(list) : [];
+        }
 
-            // ล้างข้อมูลหน้าจอ เตรียมรับคีย์ใหม่
-            keyList.innerHTML = '';
-            currentGeneratedKeys = [];
-            resultArea.style.display = 'none';
-            errorMsg.style.display = 'none';
-            copyBtn.innerText = '📋 คัดลอกคีย์';
+        function addKeyToBlacklist(key) {
+            let list = getBlacklist();
+            if (!list.includes(key)) {
+                list.push(key);
+                localStorage.setItem("key_blacklist", JSON.stringify(list));
+            }
+        }
 
-            // ตรวจสอบค่าความถูกต้อง
-            if (!days || days < 1) {
-                errorMsg.style.display = 'block';
+        function startRealCountdown(expiryTimestamp, currentKey) {
+            if (countdownInterval) clearInterval(countdownInterval);
+            
+            const timerEl = document.getElementById("countdown-timer");
+            const panelScreen = document.getElementById("panel-screen");
+
+            function updateTimer() {
+                const now = Date.now();
+                const timeLeftMs = expiryTimestamp - now;
+
+                if (timeLeftMs <= 0) {
+                    timerEl.innerText = "คีย์หมดอายุและถูกแบนแล้ว! ❌";
+                    
+                    addKeyToBlacklist(currentKey);
+                    localStorage.removeItem("proxy_expiry_time");
+                    localStorage.removeItem("proxy_active_key");
+                    
+                    clearInterval(countdownInterval);
+                    
+                    setTimeout(() => {
+                        panelScreen.classList.remove("show");
+                    }, 2500);
+                    return;
+                }
+
+                const totalSeconds = Math.floor(timeLeftMs / 1000);
+                const days = Math.floor(totalSeconds / (24 * 3600));
+                const hrs = Math.floor((totalSeconds % (24 * 3600)) / 3600);
+                const mins = Math.floor((totalSeconds % 3600) / 60);
+                const secs = totalSeconds % 60;
+
+                timerEl.innerText = `${days} วัน ${hrs} ชม. ${mins} นาที ${secs} วิ`;
+            }
+
+            updateTimer();
+            countdownInterval = setInterval(updateTimer, 1000);
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const savedExpiry = localStorage.getItem("proxy_expiry_time");
+            const savedKey = localStorage.getItem("proxy_active_key");
+            
+            if (savedExpiry && savedKey) {
+                const expiryTimestamp = parseInt(savedExpiry);
+                
+                if (expiryTimestamp > Date.now()) {
+                    document.getElementById("panel-screen").classList.add("show");
+                    startRealCountdown(expiryTimestamp, savedKey);
+                } else {
+                    addKeyToBlacklist(savedKey);
+                    localStorage.removeItem("proxy_expiry_time");
+                    localStorage.removeItem("proxy_active_key");
+                }
+            }
+        });
+
+        function validateKey() {
+            const keyInput = document.getElementById("access-key").value.trim();
+            const udidInput = document.getElementById("device-udid").value.trim();
+            const errorAlert = document.getElementById("error-alert");
+            const loginCard = document.getElementById("login-card");
+            const panelScreen = document.getElementById("panel-screen");
+
+            const blacklist = getBlacklist();
+            if (blacklist.includes(keyInput)) {
+                errorAlert.innerText = "งื้อออ คีย์นี้ถูกแบนและหมดอายุใช้งานแล้วงับ! ❌";
+                errorAlert.style.display = "block";
+                loginCard.classList.remove("shake");
+                void loginCard.offsetWidth; 
+                loginCard.classList.add("shake");
                 return;
             }
 
-            let newKey = '';
-            let isDuplicate = true;
+            const keyPattern = /^pooh-(\d+)day-proxy\d+$/;
+            const match = keyInput.match(keyPattern);
 
-            while (isDuplicate) {
-                // สร้างความไม่ซ้ำด้วย เสี้ยววินาที + สุ่มตัวเลข
-                const timeStamp = Date.now().toString().slice(-4);
-                const randomNum = Math.floor(10000 + Math.random() * 90000); 
+            if (match && udidInput.length > 0) {
+                const daysAmount = parseInt(match[1]);
                 
-                newKey = `pooh-${days}day-proxy${timeStamp}${randomNum}`;
+                const durationMs = daysAmount * 24 * 60 * 60 * 1000;
+                const expiryTimestamp = Date.now() + durationMs;
+
+                localStorage.setItem("proxy_expiry_time", expiryTimestamp);
+                localStorage.setItem("proxy_active_key", keyInput);
+
+                errorAlert.style.display = "none";
+                panelScreen.classList.add("show");
                 
-                if (!usedKeysTracker.has(newKey)) {
-                    usedKeysTracker.add(newKey);
-                    isDuplicate = false;
-                }
+                startRealCountdown(expiryTimestamp, keyInput);
+            } else {
+                errorAlert.innerText = "งื้อออ คีย์ไม่ถูกต้องหรือหมดอายุแล้วงับ! 😭";
+                errorAlert.style.display = "block";
+                loginCard.classList.remove("shake");
+                void loginCard.offsetWidth; 
+                loginCard.classList.add("shake");
             }
-
-            // แสดงผลคีย์บนหน้าจอ
-            const li = document.createElement('li');
-            li.className = 'key-item';
-            li.innerText = `🔑 ${newKey}`;
-            keyList.appendChild(li);
-            
-            // เก็บใส่กล่องสำหรับปุ่มกดคัดลอก
-            currentGeneratedKeys.push(newKey);
-
-            // เซฟคีย์ใหม่ลงเบราว์เซอร์
-            localStorage.setItem('poohProxyKeys', JSON.stringify(Array.from(usedKeysTracker)));
-
-            keyDetails.innerText = `อายุการใช้งาน: ${days} วัน`;
-            resultArea.style.display = 'block';
         }
 
-        function copyAllKeys() {
-            if (currentGeneratedKeys.length === 0) return;
+        function toggleProxyView(checkbox) {
+            const copySection = document.getElementById("copy-section");
+            if (checkbox.checked) {
+                copySection.classList.add("show");
+            } else {
+                copySection.classList.remove("show");
+                document.getElementById("copy-btn").style.background = "linear-gradient(90deg, #ff1a1a 0%, #b30000 100%)";
+                document.getElementById("copy-btn").innerText = "📋 คัดลอก Proxy ได้เลยงับ";
+            }
+        }
 
-            const textToCopy = currentGeneratedKeys.join('\n');
-
-            navigator.clipboard.writeText(textToCopy).then(() => {
-                const copyBtn = document.getElementById('copyBtn');
-                copyBtn.innerText = '✅ คัดลอกเรียบร้อยแล้ว!';
-                
+        function copyProxy() {
+            const proxyData = "147.50.235.235:9998";
+            const btn = document.getElementById("copy-btn");
+            
+            navigator.clipboard.writeText(proxyData).then(() => {
+                btn.style.background = "#00f0ff";
+                btn.style.color = "#000000";
+                btn.innerText = "✨ คัดลอกสำเร็จแล้วเย้!";
                 setTimeout(() => {
-                    copyBtn.innerText = '📋 คัดลอกคีย์';
+                    if (document.getElementById("feature-toggle").checked) {
+                        btn.style.background = "linear-gradient(90deg, #ff1a1a 0%, #b30000 100%)";
+                        btn.style.color = "#ffffff";
+                        btn.innerText = "📋 คัดลอก Proxy ได้เลยงับ";
+                    }
                 }, 2000);
-            }).catch(err => {
-                console.error('คัดลอกไม่สำเร็จ: ', err);
             });
         }
     </script>
