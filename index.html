@@ -4,12 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>REALPOOH PROXY</title>
+    <!-- นำเข้าฟอนต์น่ารักๆ มนๆ จาก Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;700&family=Mitr:wght@400;600;700&display=swap" rel="stylesheet">
+    
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            /* เปลี่ยนมาใช้ฟอนต์ Mitr และ Kanit สุดน่ารัก */
+            font-family: 'Mitr', 'Kanit', -apple-system, sans-serif;
             -webkit-font-smoothing: antialiased;
         }
 
@@ -64,23 +70,22 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden; /* เพื่อให้รูปทรงกลมตัดขอบสวยงาม */
+            overflow: hidden;
         }
 
         /* ปรับแต่งรูปภาพโลโก้ด้านใน */
         .logo-image {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* ปรับรูปภาพให้เต็มวงกลมพอดี */
+            object-fit: cover;
         }
 
         /* ชื่อแอปสไตล์ทูโทน */
         .brand-title {
-            font-size: 28px;
+            font-size: 26px; /* ปรับลดลงนิดหน่อยเพื่อให้ฟอนต์มนๆ ดูพอดี */
             font-weight: 700;
             color: #ffffff;
-            letter-spacing: 1px;
-            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .brand-title span {
@@ -93,7 +98,8 @@
             color: #8c8c8c;
             margin-top: 5px;
             margin-bottom: 30px;
-            letter-spacing: 0.5px;
+            font-family: 'Kanit', sans-serif;
+            font-weight: 400;
         }
 
         /* ---------------------------------- */
@@ -113,17 +119,16 @@
             color: #ffffff;
             font-size: 14px;
             font-weight: 600;
-            letter-spacing: 1px;
             outline: none;
             text-align: center;
             transition: all 0.3s ease;
             position: relative;
             z-index: 2;
+            font-family: 'Kanit', sans-serif;
         }
 
         .cyber-input::placeholder {
             color: #555555;
-            text-transform: uppercase;
         }
 
         .cyber-input:focus {
@@ -148,9 +153,8 @@
             border: 2px solid #00f0ff;
             border-radius: 14px;
             color: #00f0ff;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 700;
-            text-transform: uppercase;
             text-decoration: none;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -174,8 +178,6 @@
             color: #ffffff;
             font-size: 15px;
             font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
             cursor: pointer;
             display: flex;
             justify-content: center;
@@ -196,6 +198,7 @@
             font-weight: 600;
             margin-top: 12px;
             display: none;
+            font-family: 'Kanit', sans-serif;
         }
 
         /* ---------------------------------- */
@@ -228,9 +231,8 @@
         .panel-header-title {
             font-size: 18px;
             color: #ffffff;
-            font-weight: 800;
+            font-weight: 700;
             margin-bottom: 16px;
-            letter-spacing: 0.5px;
         }
 
         .expiry-box {
@@ -242,11 +244,12 @@
             border-radius: 14px;
             margin-bottom: 16px;
             font-size: 13px;
+            font-family: 'Kanit', sans-serif;
         }
 
         .expiry-title {
             color: #ff1a1a;
-            font-weight: 700;
+            font-weight: 600;
         }
 
         .expiry-time {
@@ -274,13 +277,14 @@
 
         .function-title {
             font-size: 14px;
-            font-weight: 700;
+            font-weight: 600;
             color: #ffffff;
         }
 
         .function-desc {
             font-size: 11px;
             color: #666666;
+            font-family: 'Kanit', sans-serif;
         }
 
         /* สวิตช์ Apple Style */
@@ -345,6 +349,7 @@
         .proxy-text {
             font-size: 13px;
             color: #cccccc;
+            font-family: 'Kanit', sans-serif;
         }
 
         .proxy-text strong { color: #ff1a1a; }
@@ -353,11 +358,12 @@
             background: #ff1a1a;
             color: white;
             border: none;
-            padding: 8px;
-            font-size: 12px;
-            font-weight: 700;
-            border-radius: 8px;
+            padding: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 10px;
             cursor: pointer;
+            font-family: 'Mitr', sans-serif;
         }
 
         /* ---------------------------------- */
@@ -377,9 +383,10 @@
             color: #555555;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             text-align: left;
             margin-bottom: -4px;
+            font-family: 'Kanit', sans-serif;
         }
 
         .grid-buttons {
@@ -397,7 +404,7 @@
             color: #aaaaaa;
             padding: 12px;
             font-size: 13px;
-            font-weight: 700;
+            font-weight: 600;
             border-radius: 12px;
             text-decoration: none;
             transition: all 0.25s ease;
@@ -438,51 +445,47 @@
         <!-- ล็อกอินการ์ดสไตล์ Cyberpunk ดำ-แดง -->
         <div class="cyber-card" id="login-card">
             
-            <!-- อัปเดต: เปลี่ยนลิงก์รูปภาพใน src เป็นลิงก์ภาพ GIF ของคุณแล้วครับ -->
             <div class="logo-wrapper">
                 <img src="https://cdn.discordapp.com/attachments/1528247158069792863/1528247300869197945/standard_3.gif?ex=6a5d9ab5&is=6a5c4935&hm=c825e33e19890e5168c2b3942da7d810a50248695901ec5a7aaf78de604b3828&" alt="Logo" class="logo-image">
             </div>
 
             <div class="brand-title">REALPOOH <span>PROXY</span></div>
-            <div class="brand-subtitle">Authentication Required</div>
+            <div class="brand-subtitle">✨ ยินดีต้อนรับ! กรุณายืนยันตัวตนนะ ✨</div>
 
             <!-- ช่องใส่ KEY -->
             <div class="input-group">
-                <input type="password" class="cyber-input" id="access-key" placeholder="ACCESS KEY">
+                <input type="password" class="cyber-input" id="access-key" placeholder="🔑 ใส่คีย์ของคุณที่นี่น้า">
             </div>
 
             <!-- ช่องใส่ UDID -->
             <div class="row-inputs">
-                <input type="text" class="cyber-input" id="device-udid" placeholder="DEVICE UDID">
+                <input type="text" class="cyber-input" id="device-udid" placeholder="📱 DEVICE UDID">
                 <a href="https://udid.tech/" class="btn-get-udid" target="_blank">GET UDID</a>
             </div>
 
             <!-- ปุ่มยืนยันเข้าใช้งานหลักสีแดงพรีเมียม -->
             <button class="btn-authorize" onclick="validateKey()">
-                <span>AUTHORIZE ACCESS</span>
-                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
+                <span>เปิดระบบเลยยย 🚀</span>
             </button>
 
-            <div class="error-message" id="error-alert">คีย์ไม่ถูกต้องหรือหมดอายุ!</div>
+            <div class="error-message" id="error-alert">งื้อออ คีย์ไม่ถูกต้องหรือหมดอายุแล้วงับ! 😭</div>
         </div>
 
         <!-- หน้าแผงควบคุมหลักหลังจากล็อกอินผ่านแล้ว -->
         <div class="overlay-screen" id="panel-screen">
             <div class="cyber-card">
-                <div class="panel-header-title">REALPOOH CONTROL PANEL</div>
+                <div class="panel-header-title">⭐ REALPOOH CONTROL PANEL ⭐</div>
 
                 <!-- กล่องวันหมดอายุ -->
                 <div class="expiry-box">
-                    <span class="expiry-title">อายุการใช้งานที่เหลือ</span>
+                    <span class="expiry-title">⏳ เวลาที่เหลืออยู่</span>
                     <span class="expiry-time" id="countdown-timer">2 วัน 14 ชม.</span>
                 </div>
 
                 <!-- ฟังชั่นสวิตช์เปิดปิด -->
                 <div class="function-row">
                     <div class="function-info">
-                        <span class="function-title">ยิงตัวโดนหัว (Auto Headshot)</span>
+                        <span class="function-title">🎯 ยิงตัวโดนหัว (Auto Headshot)</span>
                         <span class="function-desc">ระบบช่วยล็อกเป้าระดับ Premium</span>
                     </div>
                     <label class="switch">
@@ -497,27 +500,27 @@
                         <div class="proxy-text">
                             <strong>Host:</strong> 147.50.235.235 &nbsp;|&nbsp; <strong>Port:</strong> 9998
                         </div>
-                        <button class="btn-copy" onclick="copyProxy()" id="copy-btn">คัดลอกข้อมูล Proxy</button>
+                        <button class="btn-copy" onclick="copyProxy()" id="copy-btn">📋 คัดลอก Proxy ได้เลยงับ</button>
                     </div>
                 </div>
 
                 <!-- โซนปุ่มเมนูช่วยเหลือดาวน์โหลดด้านล่างสุด -->
                 <div class="bottom-menu">
-                    <span class="section-label">การติดตั้งและใบรับรอง</span>
+                    <span class="section-label">⚙️ การติดตั้งและใบรับรอง</span>
                     <!-- ปุ่มโหลดใบรับรอง -->
                     <a href="http://147.50.253.235/downloads/parkin.pem" class="menu-btn highlight" target="_blank">
-                        📥 ดาวน์โหลดใบรับรอง
+                        📥 ดาวน์โหลดใบรับรองที่นี่น้า
                     </a>
 
-                    <span class="section-label">คู่มือและแอปพลิเคชัน</span>
+                    <span class="section-label">📚 คู่มือและแอปพลิเคชัน</span>
                     <div class="grid-buttons">
                         <!-- ปุ่มคลิปสอน -->
                         <a href="https://youtu.be/XcXYzDPB1-k?si=ZWmi643iFjlAhogY" class="menu-btn" target="_blank">
-                            🎬 คลิปสอนใช้งาน
+                            🎬 คลิปสอนใช้งานนะ
                         </a>
                         <!-- ปุ่มโหลดแอป Potatso -->
                         <a href="https://apps.apple.com/th/app/potatso/id1239860606?l=th" class="menu-btn" target="_blank">
-                            🚀 โหลด Potatso
+                            🚀 โหลดแอป Potatso
                         </a>
                     </div>
                 </div>
@@ -565,7 +568,7 @@
             } else {
                 copySection.classList.remove("show");
                 document.getElementById("copy-btn").style.background = "#ff1a1a";
-                document.getElementById("copy-btn").innerText = "คัดลอกข้อมูล Proxy";
+                document.getElementById("copy-btn").innerText = "📋 คัดลอก Proxy ได้เลยงับ";
             }
         }
 
@@ -577,12 +580,12 @@
             navigator.clipboard.writeText(proxyData).then(() => {
                 btn.style.background = "#00f0ff";
                 btn.style.color = "#000000";
-                btn.innerText = "✓ คัดลอกสำเร็จแล้ว!";
+                btn.innerText = "✨ คัดลอกสำเร็จแล้วเย้!";
                 setTimeout(() => {
                     if (document.getElementById("feature-toggle").checked) {
                         btn.style.background = "#ff1a1a";
                         btn.style.color = "#ffffff";
-                        btn.innerText = "คัดลอกข้อมูล Proxy";
+                        btn.innerText = "📋 คัดลอก Proxy ได้เลยงับ";
                     }
                 }, 2000);
             });
