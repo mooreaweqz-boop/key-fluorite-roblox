@@ -219,7 +219,7 @@
         }
 
         /* ---------------------------------- */
-        /* หน้าจอสำหรับใส่ KEY */
+        /* หน้าจอสำหรับใส่ KEY (เน้นความเป็นส่วนตัว) */
         /* ---------------------------------- */
         .overlay-screen {
             position: absolute;
@@ -235,7 +235,7 @@
             padding: 24px;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             z-index: 10;
         }
 
@@ -246,46 +246,87 @@
 
         .key-box {
             width: 100%;
-            max-width: 320px;
+            max-width: 328px;
             background: #FFFFFF;
-            padding: 30px 24px;
-            border-radius: 20px;
-            border: 1px solid #E5E2F0;
-            box-shadow: 0 10px 30px rgba(140, 97, 199, 0.08);
+            padding: 34px 24px;
+            border-radius: 24px;
+            border: 1px solid rgba(229, 226, 240, 0.8);
+            box-shadow: 0 16px 40px rgba(140, 97, 199, 0.06);
             text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        /* เด้งสั่นๆ ตอนใส่ Key ผิด */
+        .key-box.shake {
+            animation: shake 0.4s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-6px); }
+            40%, 80% { transform: translateX(6px); }
         }
 
         .key-box h2 {
-            font-size: 20px;
+            font-size: 21px;
             font-weight: 800;
             color: #3A394D;
             margin-bottom: 8px;
+            letter-spacing: 0.3px;
         }
 
         .key-box p {
             font-size: 13px;
             color: #9C9BB3;
-            margin-bottom: 24px;
+            margin-bottom: 26px;
+        }
+
+        /* ห่อหุ้มกล่อง Input เพื่อซ่อนและมีปุ่มกดตา */
+        .input-wrapper {
+            position: relative;
+            width: 100%;
+            margin-bottom: 18px;
         }
 
         .key-input {
             width: 100%;
-            padding: 14px 16px;
-            font-size: 15px;
+            padding: 15px 50px 15px 20px;
+            font-size: 16px;
             border: 2px solid #E5E2F0;
-            border-radius: 12px;
+            border-radius: 16px;
             outline: none;
-            text-align: center;
             font-weight: 600;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
             transition: all 0.25s ease;
-            margin-bottom: 16px;
             color: #4B495E;
+            background-color: #FCFAFD;
         }
 
         .key-input:focus {
             border-color: #8C61C7;
+            background-color: #FFFFFF;
             box-shadow: 0 0 0 4px rgba(140, 97, 199, 0.1);
+        }
+
+        /* ปุ่มดวงตา เปิด/ปิดการมองเห็นคีย์ */
+        .toggle-visibility {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #A8A6BE;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s;
+        }
+
+        .toggle-visibility:hover {
+            color: #8C61C7;
         }
 
         .submit-btn {
@@ -293,25 +334,30 @@
             background: linear-gradient(135deg, #8C61C7 0%, #7A51B3 100%);
             color: white;
             border: none;
-            padding: 14px;
+            padding: 15px;
             font-size: 15px;
             font-weight: 700;
-            border-radius: 12px;
+            border-radius: 16px;
             cursor: pointer;
-            transition: all 0.25s ease;
-            box-shadow: 0 4px 12px rgba(140, 97, 199, 0.25);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 6px 16px rgba(140, 97, 199, 0.25);
+            letter-spacing: 0.5px;
         }
 
         .submit-btn:hover {
             transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(140, 97, 199, 0.4);
+            box-shadow: 0 8px 24px rgba(140, 97, 199, 0.35);
+        }
+
+        .submit-btn:active {
+            transform: translateY(1px);
         }
 
         .error-message {
             color: #FF4D4D;
             font-size: 12px;
             font-weight: 600;
-            margin-top: 10px;
+            margin-top: 12px;
             display: none;
         }
 
@@ -405,14 +451,27 @@
             <div class="counter-num" id="counter-num">0%</div>
         </div>
 
-        <!-- หน้าจอสำหรับใส่ KEY -->
+        <!-- หน้าจอสำหรับใส่ KEY (เน้นความมิดชิด ความปลอดภัย) -->
         <div class="overlay-screen" id="key-screen">
-            <div class="key-box">
+            <div class="key-box" id="key-card">
                 <h2>ENTER ACCESS KEY</h2>
-                <p>กรุณากรอกคีย์เพื่อเปิดใช้งานระบบ</p>
-                <input type="text" class="key-input" id="activation-key" placeholder="proxy-roblox-1day-xxxxx">
+                <p>กรุณากรอกคีย์เพื่อยืนยันตัวตนเปิดใช้งาน</p>
+                
+                <div class="input-wrapper">
+                    <!-- เปลี่ยนเป็น type="password" เพื่อซ่อนสิ่งที่พิมพ์ และเปลี่ยนคำใบ้ไม่ให้เห็นรูปแบบคีย์เดิม -->
+                    <input type="password" class="key-input" id="activation-key" placeholder="•••••••••••••••••">
+                    
+                    <!-- ปุ่มไอคอนดวงตาสลับเปิดปิดการมองเห็นคีย์ -->
+                    <button class="toggle-visibility" onclick="toggleKeyVisibility()" id="toggle-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                    </button>
+                </div>
+
                 <button class="submit-btn" onclick="checkKey()">VERIFY KEY</button>
-                <div class="error-message" id="error-msg">คีย์ไม่ถูกต้อง! กรุณาตรวจสอบคำว่า proxy-roblox-Xday- ข้างหน้าให้ถูก</div>
+                <div class="error-message" id="error-msg">คีย์ไม่ถูกต้อง! กรุณาตรวจสอบอีกครั้ง</div>
             </div>
         </div>
 
@@ -477,26 +536,57 @@
             }, 40); 
         });
 
-        // ฟังก์ชันตรวจสอบ: ปรับให้เช็คแค่ท่อนหน้า ท่อนหลังสุ่มอะไรมาก็ให้ผ่านหมด
+        // ฟังก์ชันเปิด/ปิดการมองเห็นคีย์ (กดรูปตา)
+        function toggleKeyVisibility() {
+            const keyInput = document.getElementById("activation-key");
+            const toggleBtn = document.getElementById("toggle-btn");
+
+            if (keyInput.type === "password") {
+                keyInput.type = "text";
+                // เปลี่ยนไอคอนเป็นรูปตาปิด (ขีดฆ่า)
+                toggleBtn.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18" />
+                    </svg>
+                `;
+            } else {
+                keyInput.type = "password";
+                // เปลี่ยนกลับเป็นรูปตาปกติ
+                toggleBtn.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                `;
+            }
+        }
+
+        // ฟังก์ชันตรวจสอบโครงสร้างคีย์
         function checkKey() {
-            const inputKey = document.getElementById("activation-key").value.trim();
+            const keyInput = document.getElementById("activation-key");
+            const inputKey = keyInput.value.trim();
             const errorMsg = document.getElementById("error-msg");
             const keyScreen = document.getElementById("key-screen");
             const menuScreen = document.getElementById("menu-screen");
+            const keyCard = document.getElementById("key-card");
 
-            //อัปเดต Regex ให้เช็คแค่ท่อนหน้า: proxy-roblox-[เลข]day- เท่านั้น ส่วนข้างหลัง (.*) จะใส่อะไรมาก็ได้หมดเลย
             const keyPattern = /^proxy-roblox-[0-9]+day-.*$/;
 
             if (keyPattern.test(inputKey)) {
                 errorMsg.style.display = "none";
+                keyCard.classList.remove("shake");
                 keyScreen.classList.remove("show");
                 
                 setTimeout(() => {
                     menuScreen.classList.add("show");
                 }, 400);
             } else {
+                // แสดงอนิเมชั่นสั่นเมื่อกรอกคีย์ผิด
                 errorMsg.style.display = "block";
-                document.getElementById("activation-key").style.borderColor = "#FF4D4D";
+                keyInput.style.borderColor = "#FF4D4D";
+                keyCard.classList.remove("shake");
+                void keyCard.offsetWidth; // บังคับให้เบราว์เซอร์รีเฟรชค่าการสั่น
+                keyCard.classList.add("shake");
             }
         }
 
