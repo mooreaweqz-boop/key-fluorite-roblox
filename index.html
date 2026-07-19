@@ -70,14 +70,14 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            padding: 6px; /* เพิ่มพื้นที่ว่างด้านในเล็กน้อยเพื่อให้รูปไม่ชิดขอบวงกลมเกินไป */
+            padding: 6px;
         }
 
         /* ปรับแต่งให้รูปภาพอยู่ตรงกลางพอดี ไม่เบี้ยว ไม่โดนตัดขอบ */
         .logo-image {
             width: 90%;
             height: 90%;
-            object-fit: contain; /* ปรับรูปภาพให้อยู่ในกรอบพอดีๆ โดยไม่เสียสัดส่วน */
+            object-fit: contain;
             border-radius: 50%;
         }
 
@@ -455,7 +455,7 @@
 
             <!-- ช่องใส่ KEY -->
             <div class="input-group">
-                <input type="password" class="cyber-input" id="access-key" placeholder="🔑 ใส่คีย์ของคุณที่นี่น้า">
+                <input type="text" class="cyber-input" id="access-key" placeholder="🔑 pooh-[จำนวนวัน/เดือน][d/m]-proxy[เลข]">
             </div>
 
             <!-- ช่องใส่ UDID -->
@@ -480,7 +480,7 @@
                 <!-- กล่องวันหมดอายุ -->
                 <div class="expiry-box">
                     <span class="expiry-title">⏳ เวลาที่เหลืออยู่</span>
-                    <span class="expiry-time" id="countdown-timer">2 วัน 14 ชม.</span>
+                    <span class="expiry-time" id="countdown-timer">กำลังคำนวณ...</span>
                 </div>
 
                 <!-- ฟังชั่นสวิตช์เปิดปิด -->
@@ -532,31 +532,58 @@
     </div>
 
     <script>
-        // ระบบนับถอยหลังเวลาใช้งาน
-        let timeRemaining = (2 * 24 * 3600) + (14 * 3600);
-        setInterval(() => {
-            if (timeRemaining <= 0) return;
-            timeRemaining--;
-            const days = Math.floor(timeRemaining / (24 * 3600));
-            const hrs = Math.floor((timeRemaining % (24 * 3600)) / 3600);
-            const mins = Math.floor((timeRemaining % 3600) / 60);
-            document.getElementById("countdown-timer").innerText = `${days} วัน ${hrs} ชม. ${mins} นาที`;
-        }, 60000);
+        let timeRemaining = 0;
+        let countdownInterval;
 
-        // ฟังก์ชันตรวจสอบ Key
+        function startCountdown() {
+            if (countdownInterval) clearInterval(countdownInterval);
+            
+            function updateDisplay() {
+                if (timeRemaining <= 0) {
+                    document.getElementById("countdown-timer").innerText = "คีย์หมดอายุแล้วงับ 😭";
+                    clearInterval(countdownInterval);
+                    return;
+                }
+                timeRemaining--;
+                const days = Math.floor(timeRemaining / (24 * 3600));
+                const hrs = Math.floor((timeRemaining % (24 * 3600)) / 3600);
+                const mins = Math.floor((timeRemaining % 3600) / 60);
+                document.getElementById("countdown-timer").innerText = `${days} วัน ${hrs} ชม. ${mins} นาที`;
+            }
+            
+            updateDisplay();
+            countdownInterval = setInterval(updateDisplay, 60000);
+        }
+
+        // ฟังก์ชันตรวจสอบ Key (รองรับทั้ง d=วัน และ m=เดือน และสุ่มตัวเลขต่อท้าย)
         function validateKey() {
             const keyInput = document.getElementById("access-key").value.trim();
+            const udidInput = document.getElementById("device-udid").value.trim();
             const errorAlert = document.getElementById("error-alert");
             const loginCard = document.getElementById("login-card");
             const panelScreen = document.getElementById("panel-screen");
 
-            if (keyInput.length > 0) {
+            // Regular Expression: ตรวจจับ pooh-[ตัวเลข][d หรือ m]-proxy[ตัวเลขเท่าไหร่ก็ได้]
+            const keyPattern = /^pooh-(\d+)([dm])-proxy\d+$/;
+            const match = keyInput.match(keyPattern);
+
+            if (match && udidInput.length > 0) {
+                const amount = parseInt(match[1]); // จำนวนเลขวันหรือเดือน
+                const unit = match[2];             // หน่วย 'd' หรือ 'm'
+
+                if (unit === 'd') {
+                    timeRemaining = amount * 24 * 3600; // แปลงวันเป็นวินาที
+                } else if (unit === 'm') {
+                    timeRemaining = amount * 30 * 24 * 3600; // แปลงเดือน (ตีเฉลี่ย 30 วัน) เป็นวินาที
+                }
+
                 errorAlert.style.display = "none";
                 panelScreen.classList.add("show");
+                startCountdown();
             } else {
                 errorAlert.style.display = "block";
                 loginCard.classList.remove("shake");
-                void loginCard.offsetWidth;
+                void loginCard.offsetWidth; 
                 loginCard.classList.add("shake");
             }
         }
