@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optimism Menu Selection</title>
+    <style>
+        /* ตั้งค่าพื้นฐานดาร์กโหมด */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #0d0d0d;
+            color: #ffffff;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* ---------------------------------- */
+        /* 1. หน้าจอ Loading Overlay */
+        /* ---------------------------------- */
+        #loader-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #0f111a;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.6s ease-out, visibility 0.6s;
+        }
+
+        .spinner-box {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .circle-loading {
+            width: 100%;
+            height: 100%;
+            border: 4px solid rgba(255, 4, 32, 0.1);
+            border-top: 4px solid #ff0420; /* สีแดง Optimism */
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .percentage {
+            position: absolute;
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .loading-text {
+            margin-top: 24px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #ff0420;
+            font-weight: 600;
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        .fade-out {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        /* ---------------------------------- */
+        /* 2. หน้าเมนูหลัก (แสดงหลังโหลดเสร็จ) */
+        /* ---------------------------------- */
+        .menu-container {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            padding: 20px;
+        }
+
+        /* เมื่อโหลดเสร็จจะเพิ่มคลาสนี้เพื่อแสดงผล */
+        .menu-container.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .menu-header h1 {
+            color: #ffffff;
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .menu-header p {
+            color: #8f93a3;
+            font-size: 14px;
+            margin-bottom: 35px;
+        }
+
+        /* ปุ่มเมนู 3 ปุ่ม */
+        .menu-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px; /* ระยะห่างระหว่างปุ่ม */
+        }
+
+        .menu-item {
+            background-color: #161824;
+            border: 1px solid #282b3d;
+            color: #ffffff;
+            padding: 18px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* เอฟเฟกต์ตอนเอาเมาส์ไปวาง (Hover) สไตล์เว็บ Blockchain */
+        .menu-item:hover {
+            background-color: #1c1e2e;
+            border-color: #ff0420;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 4, 32, 0.15);
+        }
+
+        /* ลูกศรชี้ขวาในปุ่ม */
+        .menu-item::after {
+            content: '→';
+            color: #8f93a3;
+            font-size: 18px;
+            transition: transform 0.25s ease, color 0.25s ease;
+        }
+
+        .menu-item:hover::after {
+            color: #ff0420;
+            transform: translateX(4px);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ส่วนที่ 1: หน้าจอ Loading (0% -> 100%) -->
+    <div id="loader-container">
+        <div class="spinner-box">
+            <div class="circle-loading"></div>
+            <div class="percentage" id="percent-text">0%</div>
+        </div>
+        <div class="loading-text">Initializing Ecosystem</div>
+    </div>
+
+    <!-- ส่วนที่ 2: เมนู 3 ตัวเลือกที่จะแสดงขึ้นมา -->
+    <div class="menu-container" id="main-menu-content">
+        <div class="menu-header">
+            <h1>OPTIMISM NETWORK</h1>
+            <p>โปรดเลือกเมนูที่ต้องการเพื่อดำเนินการต่อ</p>
+        </div>
+        
+        <div class="menu-list">
+            <!-- คุณสามารถเปลี่ยนข้อความเมนู หรือใส่ลิงก์ในฟังก์ชัน selectMenu ได้ครับ -->
+            <button class="menu-item" onclick="selectMenu('เมนูที่ 1: เข้าสู่ระบบ / Connect Wallet')">
+                Connect Wallet
+            </button>
+            <button class="menu-item" onclick="selectMenu('เมนูที่ 2: ดูแดชบอร์ด / Dashboard')">
+                View Dashboard
+            </button>
+            <button class="menu-item" onclick="selectMenu('เมนูที่ 3: ตั้งค่าระบบ / Settings')">
+                System Settings
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const percentText = document.getElementById("percent-text");
+            const loaderContainer = document.getElementById("loader-container");
+            const mainMenuContent = document.getElementById("main-menu-content");
+            
+            let count = 0;
+            
+            // สคริปต์รันเปอร์เซ็นต์
+            const counterInterval = setInterval(() => {
+                count += Math.floor(Math.random() * 4) + 1; // สุ่มเพิ่มทีละ 1-4%
+                
+                if (count >= 100) {
+                    count = 100;
+                    clearInterval(counterInterval);
+                    
+                    // เมื่อครบ 100% หน่วงเวลาสั้น ๆ แล้วสลับหน้าจอไปโชว์เมนู
+                    setTimeout(() => {
+                        loaderContainer.classList.add("fade-out");
+                        mainMenuContent.classList.add("show");
+                    }, 500); 
+                }
+                
+                percentText.innerText = count + "%";
+            }, 30);
+        });
+
+        // ฟังก์ชันเมื่อคลิกเลือกเมนู (ตอนนี้ตั้งค่าให้แจ้งเตือน Alert โชว์เฉย ๆ)
+        function selectMenu(menuName) {
+            alert("คุณได้เลือก " + menuName);
+            // คุณสามารถเปลี่ยนเป็นให้ลิงก์ไปหน้าอื่นได้ เช่น window.location.href = 'https://google.com';
+        }
+    </script>
+
+</body>
+</html>
