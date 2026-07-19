@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>REALPOOH PROXY - Premium Loading</title>
+    <title>REALPOOH PROXY - Premium Panel</title>
     <style>
         * {
             margin: 0;
@@ -219,7 +219,7 @@
         }
 
         /* ---------------------------------- */
-        /* หน้าจอสำหรับใส่ KEY (เน้นความเป็นส่วนตัว) */
+        /* หน้าจอสำหรับใส่ KEY */
         /* ---------------------------------- */
         .overlay-screen {
             position: absolute;
@@ -256,7 +256,6 @@
             transition: transform 0.3s ease;
         }
 
-        /* เด้งสั่นๆ ตอนใส่ Key ผิด */
         .key-box.shake {
             animation: shake 0.4s ease-in-out;
         }
@@ -281,7 +280,6 @@
             margin-bottom: 26px;
         }
 
-        /* ห่อหุ้มกล่อง Input เพื่อซ่อนและมีปุ่มกดตา */
         .input-wrapper {
             position: relative;
             width: 100%;
@@ -308,7 +306,6 @@
             box-shadow: 0 0 0 4px rgba(140, 97, 199, 0.1);
         }
 
-        /* ปุ่มดวงตา เปิด/ปิดการมองเห็นคีย์ */
         .toggle-visibility {
             position: absolute;
             right: 16px;
@@ -349,10 +346,6 @@
             box-shadow: 0 8px 24px rgba(140, 97, 199, 0.35);
         }
 
-        .submit-btn:active {
-            transform: translateY(1px);
-        }
-
         .error-message {
             color: #FF4D4D;
             font-size: 12px;
@@ -362,50 +355,187 @@
         }
 
         /* ---------------------------------- */
-        /* หน้าเมนูหลัก */
+        /* หน้าหลักควบคุมฟังก์ชัน (Control Panel) */
         /* ---------------------------------- */
-        .menu-btn-list {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
+        .panel-box {
             width: 100%;
-            max-width: 300px;
+            max-width: 328px;
+            background: #FFFFFF;
+            padding: 28px 20px;
+            border-radius: 24px;
+            border: 1px solid rgba(229, 226, 240, 0.8);
+            box-shadow: 0 16px 40px rgba(140, 97, 199, 0.06);
         }
 
-        .menu-btn {
-            background: #FFFFFF;
-            border: 1px solid #E5E2F0;
-            color: #4B495E;
-            padding: 16px 20px;
-            font-size: 15px;
-            font-weight: 600;
-            border-radius: 14px;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            text-align: left;
+        .panel-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .panel-header h3 {
+            font-size: 18px;
+            color: #3A394D;
+            font-weight: 800;
+        }
+
+        /* กล่องแสดงวันหมดอายุสไตล์ ซ้าย - ขวา */
+        .expiry-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 12px rgba(168, 129, 201, 0.05);
+            background: #F5F3FA;
+            border: 1px solid rgba(200, 185, 230, 0.4);
+            padding: 12px 16px;
+            border-radius: 14px;
+            margin-bottom: 14px;
         }
 
-        .menu-btn:hover {
-            border-color: #8C61C7;
-            background: #FDFBFF;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(140, 97, 199, 0.15);
-        }
-
-        .menu-btn::after {
-            content: '→';
-            color: #9C9BB3;
-            font-size: 16px;
-            transition: transform 0.25s ease;
-        }
-
-        .menu-btn:hover::after {
+        .expiry-left {
+            font-size: 14px;
+            font-weight: 700;
             color: #8C61C7;
-            transform: translateX(3px);
+        }
+
+        .expiry-right {
+            font-size: 13px;
+            font-weight: 600;
+            color: #72708A;
+            letter-spacing: 0.5px;
+        }
+
+        /* แถวฟังก์ชันสวิตช์เลื่อน */
+        .function-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #FDFBFF;
+            border: 1px solid #E5E2F0;
+            padding: 16px 18px;
+            border-radius: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .function-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .function-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #4B495E;
+        }
+
+        .function-desc {
+            font-size: 11px;
+            color: #9C9BB3;
+        }
+
+        /* ปุ่มสวิตช์ Apple Style */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 28px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #E4DFEC;
+            transition: .3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        input:checked + .slider {
+            background-color: #8C61C7;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(22px);
+        }
+
+        /* กล่องข้อมูลสำหรับคัดลอก Proxy */
+        .copy-container {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            margin-top: 0;
+        }
+
+        .copy-container.show {
+            max-height: 180px;
+            opacity: 1;
+            margin-top: 16px;
+        }
+
+        .proxy-card {
+            background: #F4F0FA;
+            border: 1px dashed #C8B9E6;
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .proxy-details {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            font-size: 13px;
+            color: #55536A;
+            font-weight: 600;
+        }
+
+        .proxy-details span strong {
+            color: #8C61C7;
+        }
+
+        .copy-btn {
+            background: #8C61C7;
+            color: #FFF;
+            border: none;
+            padding: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .copy-btn:hover {
+            background: #7A51B3;
+        }
+
+        .copy-btn:active {
+            transform: scale(0.98);
         }
     </style>
 </head>
@@ -451,17 +581,14 @@
             <div class="counter-num" id="counter-num">0%</div>
         </div>
 
-        <!-- หน้าจอสำหรับใส่ KEY (เน้นความมิดชิด ความปลอดภัย) -->
+        <!-- หน้าจอสำหรับใส่ KEY -->
         <div class="overlay-screen" id="key-screen">
             <div class="key-box" id="key-card">
                 <h2>ENTER ACCESS KEY</h2>
                 <p>กรุณากรอกคีย์เพื่อยืนยันตัวตนเปิดใช้งาน</p>
                 
                 <div class="input-wrapper">
-                    <!-- เปลี่ยนเป็น type="password" เพื่อซ่อนสิ่งที่พิมพ์ และเปลี่ยนคำใบ้ไม่ให้เห็นรูปแบบคีย์เดิม -->
                     <input type="password" class="key-input" id="activation-key" placeholder="•••••••••••••••••">
-                    
-                    <!-- ปุ่มไอคอนดวงตาสลับเปิดปิดการมองเห็นคีย์ -->
                     <button class="toggle-visibility" onclick="toggleKeyVisibility()" id="toggle-btn">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -475,23 +602,76 @@
             </div>
         </div>
 
-        <!-- หน้าจอเมนู 3 ตัวเลือก -->
-        <div class="overlay-screen" id="menu-screen">
-            <div class="brand-section">
-                <div class="main-title">REALPOOH <span>PROXY</span></div>
-                <div class="sub-title">MAIN INTERFACE</div>
-            </div>
-            <div class="menu-btn-list">
-                <button class="menu-btn" onclick="actionMenu('Menu 1')">เข้าสู่ระบบระบบหลัก</button>
-                <button class="menu-btn" onclick="actionMenu('Menu 2')">เลือกเซิร์ฟเวอร์ Proxy</button>
-                <button class="menu-btn" onclick="actionMenu('Menu 3')">ตั้งค่าการเชื่อมต่อ</button>
+        <!-- หน้าควบคุมฟังก์ชันหลัก -->
+        <div class="overlay-screen" id="panel-screen">
+            <div class="panel-box">
+                <div class="panel-header">
+                    <h3>REALPOOH CONTROL PANEL</h3>
+                </div>
+
+                <!-- เพิ่ม: ส่วนแสดงวันหมดอายุสไตล์ ซ้าย - ขวา -->
+                <div class="expiry-container">
+                    <div class="expiry-left" id="expiry-days">2 วัน</div>
+                    <div class="expiry-right" id="expiry-countdown">14 ชม. 35 นาที 22 วิ</div>
+                </div>
+
+                <!-- ฟังก์ชันสวิตช์ยิงตัวโดนหัว -->
+                <div class="function-row">
+                    <div class="function-info">
+                        <span class="function-title">ยิงตัวโดนหัว (Auto Headshot)</span>
+                        <span class="function-desc">เปิดใช้งานฟังชั่นช่วยเล็งระดับพรีเมียม</span>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="function-toggle" onchange="handleToggleChange(this)">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <!-- กล่องแสดงข้อความคัดลอกเมื่อเปิดสวิตช์ -->
+                <div class="copy-container" id="copy-section">
+                    <div class="proxy-card">
+                        <div class="proxy-details">
+                            <span><strong>เซิร์ฟเวอร์:</strong> 147.50.235.235</span>
+                            <span><strong>พอร์ต:</strong> 9998</span>
+                        </div>
+                        <button class="copy-btn" onclick="copyProxyToClipboard()" id="copy-btn">
+                            <span>คัดลอกข้อมูล Proxy</span>
+                        </button>
+                    </div>
+                </div>
+
             </div>
         </div>
 
     </div>
 
     <script>
+        // ระบบนับถอยหลังเวลาที่เหลือ (จำลองเวลาถอยหลังแบบเท่ๆ)
+        let totalSeconds = (14 * 3600) + (35 * 60) + 22; 
+
+        function startCountdown() {
+            const countdownEl = document.getElementById("expiry-countdown");
+            
+            const timer = setInterval(() => {
+                if (totalSeconds <= 0) {
+                    clearInterval(timer);
+                    countdownEl.innerText = "หมดอายุการใช้งาน";
+                    return;
+                }
+                
+                totalSeconds--;
+                
+                const hrs = Math.floor(totalSeconds / 3600);
+                const mins = Math.floor((totalSeconds % 3600) / 60);
+                const secs = totalSeconds % 60;
+                
+                countdownEl.innerText = `${hrs} ชม. ${mins} นาที ${secs} วิ`;
+            }, 1000);
+        }
+
         document.addEventListener("DOMContentLoaded", function() {
+            startCountdown(); // เริ่มนับเวลาถอยหลัง
+
             const ring = document.getElementById("ring-progress");
             const barFill = document.getElementById("bar-fill");
             const counterNum = document.getElementById("counter-num");
@@ -536,14 +716,12 @@
             }, 40); 
         });
 
-        // ฟังก์ชันเปิด/ปิดการมองเห็นคีย์ (กดรูปตา)
         function toggleKeyVisibility() {
             const keyInput = document.getElementById("activation-key");
             const toggleBtn = document.getElementById("toggle-btn");
 
             if (keyInput.type === "password") {
                 keyInput.type = "text";
-                // เปลี่ยนไอคอนเป็นรูปตาปิด (ขีดฆ่า)
                 toggleBtn.innerHTML = `
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18" />
@@ -551,7 +729,6 @@
                 `;
             } else {
                 keyInput.type = "password";
-                // เปลี่ยนกลับเป็นรูปตาปกติ
                 toggleBtn.innerHTML = `
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -561,37 +738,68 @@
             }
         }
 
-        // ฟังก์ชันตรวจสอบโครงสร้างคีย์
         function checkKey() {
             const keyInput = document.getElementById("activation-key");
             const inputKey = keyInput.value.trim();
             const errorMsg = document.getElementById("error-msg");
             const keyScreen = document.getElementById("key-screen");
-            const menuScreen = document.getElementById("menu-screen");
+            const panelScreen = document.getElementById("panel-screen");
             const keyCard = document.getElementById("key-card");
+            const daysDisplay = document.getElementById("expiry-days");
 
             const keyPattern = /^proxy-roblox-[0-9]+day-.*$/;
 
             if (keyPattern.test(inputKey)) {
+                // ดึงตัวเลขจำนวนวันจาก Key มาแสดงผลจริงแบบไดนามิก
+                const match = inputKey.match(/proxy-roblox-(\d+)day-/);
+                if (match && match[1]) {
+                    daysDisplay.innerText = match[1] + " วัน";
+                }
+
                 errorMsg.style.display = "none";
                 keyCard.classList.remove("shake");
                 keyScreen.classList.remove("show");
                 
                 setTimeout(() => {
-                    menuScreen.classList.add("show");
+                    panelScreen.classList.add("show");
                 }, 400);
             } else {
-                // แสดงอนิเมชั่นสั่นเมื่อกรอกคีย์ผิด
                 errorMsg.style.display = "block";
                 keyInput.style.borderColor = "#FF4D4D";
                 keyCard.classList.remove("shake");
-                void keyCard.offsetWidth; // บังคับให้เบราว์เซอร์รีเฟรชค่าการสั่น
+                void keyCard.offsetWidth; 
                 keyCard.classList.add("shake");
             }
         }
 
-        function actionMenu(name) {
-            alert("คุณได้เลือกใช้งาน: " + name);
+        function handleToggleChange(checkbox) {
+            const copySection = document.getElementById("copy-section");
+            if (checkbox.checked) {
+                copySection.classList.add("show");
+            } else {
+                copySection.classList.remove("show");
+                document.getElementById("copy-btn").style.background = "#8C61C7";
+                document.getElementById("copy-btn").innerText = "คัดลอกข้อมูล Proxy";
+            }
+        }
+
+        function copyProxyToClipboard() {
+            const proxyText = "147.50.235.235:9998";
+            const btn = document.getElementById("copy-btn");
+            
+            navigator.clipboard.writeText(proxyText).then(() => {
+                btn.style.background = "#4CD080";
+                btn.innerText = "✓ คัดลอกสำเร็จแล้ว!";
+                
+                setTimeout(() => {
+                    if (document.getElementById("function-toggle").checked) {
+                        btn.style.background = "#8C61C7";
+                        btn.innerText = "คัดลอกข้อมูล Proxy";
+                    }
+                }, 2000);
+            }).catch(err => {
+                alert("เกิดข้อผิดพลาดในการคัดลอก: " + err);
+            });
         }
     </script>
 </body>
