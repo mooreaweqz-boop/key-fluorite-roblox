@@ -39,7 +39,7 @@
         }
 
         /* ---------------------------------- */
-        /* วงแหวนเหล็กเมทัลลิก 3D แบบสมูธสุด ๆ */
+        /* วงแหวนเหล็กเมทัลลิก 3D */
         /* ---------------------------------- */
         .loader-wrapper {
             position: relative;
@@ -51,14 +51,12 @@
             margin-bottom: 45px;
         }
 
-        /* ปุ่มตรงกลางสไตล์กระจกนูนเงาเหล็ก */
         .glass-circle {
             position: absolute;
             width: 110px;
             height: 110px;
             background: linear-gradient(135deg, #ffffff 0%, #e2d9f3 50%, #c8b9e6 100%);
             border-radius: 50%;
-            /* สร้างมิติขอบเหล็กหนาเงาวาว */
             box-shadow: 
                 0 15px 35px rgba(108, 82, 153, 0.25),
                 inset 0 4px 10px rgba(255, 255, 255, 0.9),
@@ -80,13 +78,12 @@
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
         }
 
-        /* ตัวครอบ SVG ให้หมุนแบบนุ่มนวลตลอดเวลา (Linear Smooth) */
         .svg-rotation-wrapper {
             position: absolute;
             width: 160px;
             height: 160px;
             z-index: 2;
-            animation: smooth-spin 2.5s linear infinite; /* หมุนโครงสร้างหลักเบา ๆ */
+            animation: smooth-spin 2.5s linear infinite;
         }
 
         .svg-ring {
@@ -95,16 +92,12 @@
             transform: rotate(-90deg);
         }
 
-        /* วงแหวนร่องเหล็กด้านหลัง */
         .ring-bg {
             fill: none;
             stroke: #E4DFEC;
             stroke-width: 9;
-            /* เพิ่มมิติหลุมเหล็ก */
-            filter: drop-shadow(inset 0 1px 3px rgba(0,0,0,0.1)); 
         }
 
-        /* วงแหวนโหลดจริงไล่เฉดเหล็กนีออนเงา */
         .ring-flow {
             fill: none;
             stroke: url(#chromeGradient);
@@ -112,19 +105,14 @@
             stroke-linecap: round;
             stroke-dasharray: 440;
             stroke-dashoffset: 440;
-            /* ใช้ cubic-bezier เพื่อความสมูธในการเคลี่อนที่ขยับตาม % */
             transition: stroke-dashoffset 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* แอนิเมชันหมุนโครงเหล็กแบบลื่นไหลลื่นปรื๊ด */
         @keyframes smooth-spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
 
-        /* ---------------------------------- */
-        /* ส่วนข้อความและส่วนอื่น ๆ คงเดิม */
-        /* ---------------------------------- */
         .brand-section {
             text-align: center;
             margin-bottom: 40px;
@@ -230,7 +218,10 @@
             font-weight: 600;
         }
 
-        .menu-overlay {
+        /* ---------------------------------- */
+        /* หน้าจอสำหรับใส่ KEY */
+        /* ---------------------------------- */
+        .overlay-screen {
             position: absolute;
             top: 0;
             left: 0;
@@ -248,23 +239,85 @@
             z-index: 10;
         }
 
-        .menu-overlay.show {
+        .overlay-screen.show {
             opacity: 1;
             visibility: visible;
         }
 
-        .menu-title {
-            font-size: 24px;
-            font-weight: 800;
-            color: #3A394D;
-            margin-bottom: 30px;
+        .key-box {
+            width: 100%;
+            max-width: 320px;
+            background: #FFFFFF;
+            padding: 30px 24px;
+            border-radius: 20px;
+            border: 1px solid #E5E2F0;
+            box-shadow: 0 10px 30px rgba(140, 97, 199, 0.08);
             text-align: center;
         }
 
-        .menu-title span {
-            color: #8C61C7;
+        .key-box h2 {
+            font-size: 20px;
+            font-weight: 800;
+            color: #3A394D;
+            margin-bottom: 8px;
         }
 
+        .key-box p {
+            font-size: 13px;
+            color: #9C9BB3;
+            margin-bottom: 24px;
+        }
+
+        .key-input {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 15px;
+            border: 2px solid #E5E2F0;
+            border-radius: 12px;
+            outline: none;
+            text-align: center;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: all 0.25s ease;
+            margin-bottom: 16px;
+            color: #4B495E;
+        }
+
+        .key-input:focus {
+            border-color: #8C61C7;
+            box-shadow: 0 0 0 4px rgba(140, 97, 199, 0.1);
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #8C61C7 0%, #7A51B3 100%);
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 15px;
+            font-weight: 700;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 12px rgba(140, 97, 199, 0.25);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(140, 97, 199, 0.4);
+        }
+
+        .error-message {
+            color: #FF4D4D;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 10px;
+            display: none;
+        }
+
+        /* ---------------------------------- */
+        /* หน้าเมนูหลัก */
+        /* ---------------------------------- */
         .menu-btn-list {
             display: flex;
             flex-direction: column;
@@ -319,11 +372,9 @@
             <div class="glass-circle">
                 <span class="brand-initial">RP</span>
             </div>
-            <!-- ตัวครอบเพิ่มแอนิเมชันการหมุนสมูธควงสว่าน -->
             <div class="svg-rotation-wrapper">
                 <svg class="svg-ring" width="160" height="160" viewBox="0 0 160 160">
                     <defs>
-                        <!-- การไล่เฉดสีสไตล์ Chrome เมทัลลิกวาว ๆ -->
                         <linearGradient id="chromeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                             <stop offset="0%" stop-color="#8C61C7" />
                             <stop offset="30%" stop-color="#A881C9" />
@@ -343,33 +394,34 @@
         </div>
 
         <div class="status-box">
-            <div class="status-row" id="step-1">
-                <div class="check-dot"></div>
-                เชื่อมต่อเซิร์ฟเวอร์
-            </div>
-            <div class="status-row" id="step-2">
-                <div class="check-dot"></div>
-                ตรวจสอบความปลอดภัย
-            </div>
-            <div class="status-row" id="step-3">
-                <div class="check-dot"></div>
-                โหลดข้อมูล Proxy
-            </div>
-            <div class="status-row" id="step-4">
-                <div class="check-dot"></div>
-                พร้อมใช้งาน
-            </div>
+            <div class="status-row" id="step-1"><div class="check-dot"></div>เชื่อมต่อเซิร์ฟเวอร์</div>
+            <div class="status-row" id="step-2"><div class="check-dot"></div>ตรวจสอบความปลอดภัย</div>
+            <div class="status-row" id="step-3"><div class="check-dot"></div>โหลดข้อมูล Proxy</div>
+            <div class="status-row" id="step-4"><div class="check-dot"></div>พร้อมใช้งาน</div>
         </div>
 
         <div class="progress-wrapper">
-            <div class="bar-outline">
-                <div class="bar-fill" id="bar-fill"></div>
-            </div>
+            <div class="bar-outline"><div class="bar-fill" id="bar-fill"></div></div>
             <div class="counter-num" id="counter-num">0%</div>
         </div>
 
-        <div class="menu-overlay" id="menu-overlay">
-            <div class="menu-title">REALPOOH <span>PROXY</span></div>
+        <!-- หน้าจอสำหรับใส่ KEY -->
+        <div class="overlay-screen" id="key-screen">
+            <div class="key-box">
+                <h2>ENTER ACCESS KEY</h2>
+                <p>กรุณากรอกคีย์เพื่อเปิดใช้งานระบบ</p>
+                <input type="text" class="key-input" id="activation-key" placeholder="proxy-roblox-1day-xxxxx">
+                <button class="submit-btn" onclick="checkKey()">VERIFY KEY</button>
+                <div class="error-message" id="error-msg">คีย์ไม่ถูกต้อง! กรุณาตรวจสอบคำว่า proxy-roblox-Xday- ข้างหน้าให้ถูก</div>
+            </div>
+        </div>
+
+        <!-- หน้าจอเมนู 3 ตัวเลือก -->
+        <div class="overlay-screen" id="menu-screen">
+            <div class="brand-section">
+                <div class="main-title">REALPOOH <span>PROXY</span></div>
+                <div class="sub-title">MAIN INTERFACE</div>
+            </div>
             <div class="menu-btn-list">
                 <button class="menu-btn" onclick="actionMenu('Menu 1')">เข้าสู่ระบบระบบหลัก</button>
                 <button class="menu-btn" onclick="actionMenu('Menu 2')">เลือกเซิร์ฟเวอร์ Proxy</button>
@@ -384,10 +436,9 @@
             const ring = document.getElementById("ring-progress");
             const barFill = document.getElementById("bar-fill");
             const counterNum = document.getElementById("counter-num");
-            const menuOverlay = document.getElementById("menu-overlay");
+            const keyScreen = document.getElementById("key-screen");
             
             let percent = 0;
-            // เส้นรอบวงคำนวณใหม่จากรัศมี r=70 (2 * Math.PI * 70 = ~439.8)
             const circumference = 2 * Math.PI * 70; 
             
             ring.style.strokeDasharray = circumference;
@@ -400,7 +451,6 @@
                 { limit: 100, id: "step-4" }
             ];
 
-            // ปรับระดับความเร่งให้นุ่มนวลแบบมีไดนามิก
             const interval = setInterval(() => {
                 percent += Math.floor(Math.random() * 2) + 1;
                 
@@ -409,7 +459,7 @@
                     clearInterval(interval);
                     
                     setTimeout(() => {
-                        menuOverlay.classList.add("show");
+                        keyScreen.classList.add("show");
                     }, 600);
                 }
 
@@ -424,9 +474,31 @@
                         document.getElementById(step.id).classList.add("active");
                     }
                 });
-
-            }, 50); 
+            }, 40); 
         });
+
+        // ฟังก์ชันตรวจสอบ: ปรับให้เช็คแค่ท่อนหน้า ท่อนหลังสุ่มอะไรมาก็ให้ผ่านหมด
+        function checkKey() {
+            const inputKey = document.getElementById("activation-key").value.trim();
+            const errorMsg = document.getElementById("error-msg");
+            const keyScreen = document.getElementById("key-screen");
+            const menuScreen = document.getElementById("menu-screen");
+
+            //อัปเดต Regex ให้เช็คแค่ท่อนหน้า: proxy-roblox-[เลข]day- เท่านั้น ส่วนข้างหลัง (.*) จะใส่อะไรมาก็ได้หมดเลย
+            const keyPattern = /^proxy-roblox-[0-9]+day-.*$/;
+
+            if (keyPattern.test(inputKey)) {
+                errorMsg.style.display = "none";
+                keyScreen.classList.remove("show");
+                
+                setTimeout(() => {
+                    menuScreen.classList.add("show");
+                }, 400);
+            } else {
+                errorMsg.style.display = "block";
+                document.getElementById("activation-key").style.borderColor = "#FF4D4D";
+            }
+        }
 
         function actionMenu(name) {
             alert("คุณได้เลือกใช้งาน: " + name);
