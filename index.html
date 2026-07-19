@@ -2,238 +2,323 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Optimism Menu Selection</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MRP CS PROXY - Loading</title>
     <style>
-        /* ตั้งค่าพื้นฐานดาร์กโหมด */
+        /* ตั้งค่าพื้นฐานให้เหมือนหน้าจอแอป */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
         }
 
         body {
-            background-color: #0d0d0d;
-            color: #ffffff;
-            overflow: hidden;
+            background-color: #F6F3F9; /* สีพื้นหลังม่วงอ่อนตามรูป */
+            color: #333;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            overflow: hidden; /* ซ่อน scrollbar */
         }
 
-        /* ---------------------------------- */
-        /* 1. หน้าจอ Loading Overlay */
-        /* ---------------------------------- */
-        #loader-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: #0f111a;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.6s ease-out, visibility 0.6s;
-        }
-
-        .spinner-box {
-            position: relative;
-            width: 120px;
-            height: 120px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .circle-loading {
+        /* คอนเทนเนอร์หลักจำลองหน้าจอโทรศัพท์ */
+        .app-container {
             width: 100%;
-            height: 100%;
-            border: 4px solid rgba(255, 4, 32, 0.1);
-            border-top: 4px solid #ff0420; /* สีแดง Optimism */
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        .percentage {
-            position: absolute;
-            font-size: 20px;
-            font-weight: 700;
-            color: #ffffff;
-        }
-
-        .loading-text {
-            margin-top: 24px;
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: #ff0420;
-            font-weight: 600;
-            animation: pulse 1.5s infinite ease-in-out;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 1; }
-        }
-
-        .fade-out {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-        /* ---------------------------------- */
-        /* 2. หน้าเมนูหลัก (แสดงหลังโหลดเสร็จ) */
-        /* ---------------------------------- */
-        .menu-container {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-            text-align: center;
-            max-width: 450px;
-            width: 90%;
-            padding: 20px;
-        }
-
-        /* เมื่อโหลดเสร็จจะเพิ่มคลาสนี้เพื่อแสดงผล */
-        .menu-container.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .menu-header h1 {
-            color: #ffffff;
-            font-size: 2rem;
-            font-weight: 800;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-        }
-
-        .menu-header p {
-            color: #8f93a3;
-            font-size: 14px;
-            margin-bottom: 35px;
-        }
-
-        /* ปุ่มเมนู 3 ปุ่ม */
-        .menu-list {
+            max-width: 414px; /* ขนาด iPhone Max */
+            height: 100vh;
+            background: linear-gradient(180deg, #FFFFFF 0%, #F6F3F9 100%);
             display: flex;
             flex-direction: column;
-            gap: 16px; /* ระยะห่างระหว่างปุ่ม */
-        }
-
-        .menu-item {
-            background-color: #161824;
-            border: 1px solid #282b3d;
-            color: #ffffff;
-            padding: 18px 24px;
-            font-size: 16px;
-            font-weight: 600;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            text-align: left;
-            display: flex;
-            justify-content: space-between;
             align-items: center;
+            padding: 60px 20px;
+            position: relative;
         }
 
-        /* เอฟเฟกต์ตอนเอาเมาส์ไปวาง (Hover) สไตล์เว็บ Blockchain */
-        .menu-item:hover {
-            background-color: #1c1e2e;
-            border-color: #ff0420;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 4, 32, 0.15);
+        /* ---------------------------------- */
+        /* ส่วนวงกลมโหลดตรงกลาง */
+        /* ---------------------------------- */
+        .loader-circle-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 40px;
         }
 
-        /* ลูกศรชี้ขวาในปุ่ม */
-        .menu-item::after {
-            content: '→';
-            color: #8f93a3;
-            font-size: 18px;
-            transition: transform 0.25s ease, color 0.25s ease;
+        /* วงกลมพื้นหลังสีเทา */
+        .circle-bg {
+            fill: none;
+            stroke: #EAEAEF;
+            stroke-width: 10;
         }
 
-        .menu-item:hover::after {
-            color: #ff0420;
-            transform: translateX(4px);
+        /* วงกลมความก้าวหน้าสีม่วง/ฟ้า */
+        .circle-progress {
+            fill: none;
+            stroke: #A881C9; /* สีม่วงหลัก */
+            stroke-width: 10;
+            stroke-linecap: round;
+            stroke-dasharray: 440; /* เส้นรอบวง */
+            stroke-dashoffset: 440; /* เริ่มต้นที่ 0% */
+            transition: stroke-dashoffset 0.05s linear;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+
+        /* ตัวอักษร MR ตรงกลาง */
+        .mr-text {
+            position: absolute;
+            font-size: 32px;
+            font-weight: 700;
+            color: #7A57A1;
+            letter-spacing: 1px;
+        }
+
+        /* ---------------------------------- */
+        /* ส่วนข้อความหัวข้อ */
+        /* ---------------------------------- */
+        .header-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .main-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2D2D3A;
+            margin-bottom: 5px;
+        }
+
+        .main-title span {
+            color: #7A57A1; /* สีม่วงที่คำว่า PROXY */
+        }
+
+        .sub-title {
+            font-size: 14px;
+            color: #8E8E9F;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+
+        /* ---------------------------------- */
+        /* ส่วนรายการสถานะ (Status List) */
+        /* ---------------------------------- */
+        .status-list {
+            width: 100%;
+            max-width: 300px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            color: #555;
+            transition: color 0.3s ease;
+        }
+
+        /* วงกลมติ๊กถูก (Icon) */
+        .status-icon {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 2px solid #EAEAEF; /* สถานะยังไม่เสร็จ */
+            margin-right: 15px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        /* สไตล์เมื่อรายการเสร็จสิ้น (Done) */
+        .status-item.done {
+            color: #A881C9; /* ข้อความเปลี่ยนสี */
+        }
+
+        .status-item.done .status-icon {
+            background-color: #D6EBDC; /* พื้นเขียวอ่อน */
+            border-color: #54B463; /* ขอบเขียว */
+        }
+
+        /* เครื่องหมายติ๊กถูก (Checkmark) */
+        .status-item.done .status-icon::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #54B463;
+            font-size: 12px;
+            font-weight: 900;
+        }
+
+        /* ---------------------------------- */
+        /* ส่วนแถบโหลดและตัวเลข (Progress Bar) */
+        /* ---------------------------------- */
+        .progress-section {
+            width: 100%;
+            max-width: 300px;
+            text-align: center;
+        }
+
+        /* แถบโหลดพื้นหลัง */
+        .progress-bar-bg {
+            width: 100%;
+            height: 6px;
+            background-color: #EAEAEF;
+            border-radius: 3px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+
+        /* แถบโหลดจริงสีม่วง */
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%; /* เริ่มต้น 0 */
+            background-color: #A881C9;
+            border-radius: 3px;
+            transition: width 0.05s linear;
+        }
+
+        /* ตัวเลขเปอร์เซ็นต์ */
+        .percent-text {
+            font-size: 14px;
+            color: #8E8E9F;
+            font-weight: 600;
+        }
+
+        /* ---------------------------------- */
+        /* หน้าจอหลังโหลดเสร็จ (ตัวอย่าง) */
+        /* ---------------------------------- */
+        #main-content {
+            display: none; /* ซ่อนไว้ก่อน */
+            width: 100%;
+            text-align: center;
+            padding: 40px;
+        }
+
+        #main-content.show {
+            display: block;
         }
     </style>
 </head>
 <body>
 
-    <!-- ส่วนที่ 1: หน้าจอ Loading (0% -> 100%) -->
-    <div id="loader-container">
-        <div class="spinner-box">
-            <div class="circle-loading"></div>
-            <div class="percentage" id="percent-text">0%</div>
+    <!-- 1. ส่วนของหน้า Loading ที่จำลองจากรูป image_1.png -->
+    <div class="app-container" id="loading-screen">
+        
+        <!-- วงกลมโหลดตรงกลาง -->
+        <div class="loader-circle-container">
+            <svg width="150" height="150" viewBox="0 0 150 150">
+                <circle class="circle-bg" cx="75" cy="75" r="70"></circle>
+                <circle class="circle-progress" id="circle-progress" cx="75" cy="75" r="70"></circle>
+            </svg>
+            <div class="mr-text">MR</div>
         </div>
-        <div class="loading-text">Initializing Ecosystem</div>
+
+        <!-- หัวข้อข้อความ -->
+        <div class="header-section">
+            <div class="main-title">MRP CS <span>PROXY</span></div>
+            <div class="sub-title">PREMIUM PROXY ACCESS</div>
+        </div>
+
+        <!-- รายการสถานะ -->
+        <div class="status-list">
+            <div class="status-item" id="status-1">
+                <div class="status-icon"></div>
+                เชื่อมต่อเซิร์ฟเวอร์
+            </div>
+            <div class="status-item" id="status-2">
+                <div class="status-icon"></div>
+                ตรวจสอบความปลอดภัย
+            </div>
+            <div class="status-item" id="status-3">
+                <div class="status-icon"></div>
+                โหลดข้อมูล Proxy
+            </div>
+            <div class="status-item" id="status-4">
+                <div class="status-icon"></div>
+                พร้อมใช้งาน
+            </div>
+        </div>
+
+        <!-- แถบโหลดและตัวเลขเปอร์เซ็นต์ -->
+        <div class="progress-section">
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="progress-bar-fill"></div>
+            </div>
+            <div class="percent-text" id="percent-text">0%</div>
+        </div>
+
     </div>
 
-    <!-- ส่วนที่ 2: เมนู 3 ตัวเลือกที่จะแสดงขึ้นมา -->
-    <div class="menu-container" id="main-menu-content">
-        <div class="menu-header">
-            <h1>OPTIMISM NETWORK</h1>
-            <p>โปรดเลือกเมนูที่ต้องการเพื่อดำเนินการต่อ</p>
-        </div>
-        
-        <div class="menu-list">
-            <!-- คุณสามารถเปลี่ยนข้อความเมนู หรือใส่ลิงก์ในฟังก์ชัน selectMenu ได้ครับ -->
-            <button class="menu-item" onclick="selectMenu('เมนูที่ 1: เข้าสู่ระบบ / Connect Wallet')">
-                Connect Wallet
-            </button>
-            <button class="menu-item" onclick="selectMenu('เมนูที่ 2: ดูแดชบอร์ด / Dashboard')">
-                View Dashboard
-            </button>
-            <button class="menu-item" onclick="selectMenu('เมนูที่ 3: ตั้งค่าระบบ / Settings')">
-                System Settings
-            </button>
-        </div>
+    <!-- 2. ส่วนของเนื้อหาหลักหลังโหลดเสร็จ (คุณสามารถใส่โค้ดหน้าเว็บจริงที่นี่) -->
+    <div id="main-content">
+        <h1>ยินดีต้อนรับ!</h1>
+        <p>เชื่อมต่อ Proxy สำเร็จแล้ว พร้อมใช้งานครับ</p>
     </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            // ดึง Element ต่างๆ
+            const circle = document.getElementById("circle-progress");
+            const progressBarFill = document.getElementById("progress-bar-fill");
             const percentText = document.getElementById("percent-text");
-            const loaderContainer = document.getElementById("loader-container");
-            const mainMenuContent = document.getElementById("main-menu-content");
+            const loadingScreen = document.getElementById("loading-screen");
+            const mainContent = document.getElementById("main-content");
             
-            let count = 0;
+            // การตั้งค่าความเร็วและรายการสถานะ
+            let progress = 0;
+            const statusItems = [
+                { percent: 25, id: "status-1" },
+                { percent: 50, id: "status-2" },
+                { percent: 75, id: "status-3" },
+                { percent: 100, id: "status-4" }
+            ];
             
-            // สคริปต์รันเปอร์เซ็นต์
-            const counterInterval = setInterval(() => {
-                count += Math.floor(Math.random() * 4) + 1; // สุ่มเพิ่มทีละ 1-4%
+            // ฟังก์ชันจำลองการโหลด
+            const loadInterval = setInterval(() => {
+                // สุ่มเพิ่มความคืบหน้าทีละนิดเพื่อให้ดูสมจริง
+                progress += Math.floor(Math.random() * 3) + 1; 
                 
-                if (count >= 100) {
-                    count = 100;
-                    clearInterval(counterInterval);
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(loadInterval); // หยุดเมื่อครบ 100
                     
-                    // เมื่อครบ 100% หน่วงเวลาสั้น ๆ แล้วสลับหน้าจอไปโชว์เมนู
+                    // เมื่อครบ 100% หน่วงเวลาแป๊บนึงแล้วเปลี่ยนหน้า
                     setTimeout(() => {
-                        loaderContainer.classList.add("fade-out");
-                        mainMenuContent.classList.add("show");
-                    }, 500); 
+                        loadingScreen.style.display = 'none'; // ซ่อนหน้าโหลด
+                        mainContent.classList.add('show'); // แสดงหน้าหลัก
+                        document.body.style.backgroundColor = '#FFFFFF'; // เปลี่ยนพื้นหลังหน้าหลัก
+                    }, 800); 
                 }
                 
-                percentText.innerText = count + "%";
-            }, 30);
+                // --- อัปเดต UI ---
+                
+                // 1. อัปเดตตัวเลข % และแถบโหลดด้านล่าง
+                percentText.innerText = progress + "%";
+                progressBarFill.style.width = progress + "%";
+                
+                // 2. อัปเดตวงกลมโหลดตรงกลาง
+                const offset = 440 - (progress / 100) * 440; // คำนวณความยาวเส้น
+                circle.style.strokeDashoffset = offset;
+                
+                // 3. ตรวจสอบและติ๊กถูกรายการสถานะตาม %
+                statusItems.forEach(item => {
+                    if (progress >= item.percent) {
+                        document.getElementById(item.id).classList.add("done");
+                    }
+                });
+                
+            }, 50); // ความเร็วในการอัปเดต (ยิ่งน้อยยิ่งเร็ว)
         });
-
-        // ฟังก์ชันเมื่อคลิกเลือกเมนู (ตอนนี้ตั้งค่าให้แจ้งเตือน Alert โชว์เฉย ๆ)
-        function selectMenu(menuName) {
-            alert("คุณได้เลือก " + menuName);
-            // คุณสามารถเปลี่ยนเป็นให้ลิงก์ไปหน้าอื่นได้ เช่น window.location.href = 'https://google.com';
-        }
     </script>
 
 </body>
