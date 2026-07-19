@@ -453,7 +453,7 @@
             <div class="brand-title">REALPOOH <span>PROXY</span></div>
             <div class="brand-subtitle">✨ ยินดีต้อนรับ! กรุณายืนยันตัวตนนะ ✨</div>
 
-            <!-- ช่องใส่ KEY (ปิดซ่อนคีย์ ป้องกันความเป็นส่วนตัว 100%) -->
+            <!-- ช่องใส่ KEY (ปิดบังรหัส เพื่อความปลอดภัย) -->
             <div class="input-group">
                 <input type="password" class="cyber-input" id="access-key" placeholder="🔑 กรอกคีย์เปิดใช้งานระบบที่นี่">
             </div>
@@ -472,7 +472,7 @@
             <div class="error-message" id="error-alert">งื้อออ คีย์ไม่ถูกต้องหรือหมดอายุแล้วงับ! 😭</div>
         </div>
 
-        <!-- หน้าแผงควบคุมหลักหลังจากล็อกอินผ่านแล้ว -->
+        <!-- หน้าจอหลักแผงควบคุมหลังยืนยันตัวตน -->
         <div class="overlay-screen" id="panel-screen">
             <div class="cyber-card">
                 <div class="panel-header-title">⭐ REALPOOH CONTROL PANEL ⭐</div>
@@ -532,30 +532,82 @@
     </div>
 
     <script>
-        let timeRemaining = 0;
         let countdownInterval;
 
-        function startCountdown() {
-            if (countdownInterval) clearInterval(countdownInterval);
-            
-            function updateDisplay() {
-                if (timeRemaining <= 0) {
-                    document.getElementById("countdown-timer").innerText = "คีย์หมดอายุแล้วงับ 😭";
-                    clearInterval(countdownInterval);
-                    return;
-                }
-                timeRemaining--;
-                const days = Math.floor(timeRemaining / (24 * 3600));
-                const hrs = Math.floor((timeRemaining % (24 * 3600)) / 3600);
-                const mins = Math.floor((timeRemaining % 3600) / 60);
-                document.getElementById("countdown-timer").innerText = `${days} วัน ${hrs} ชม. ${mins} นาที`;
-            }
-            
-            updateDisplay();
-            countdownInterval = setInterval(updateDisplay, 60000);
+        // ดึงข้อมูลรายชื่อบัญชีดำ (Blacklist) จาก LocalStorage
+        function getBlacklist() {
+            const list = localStorage.getItem("key_blacklist");
+            return list ? JSON.parse(list) : [];
         }
 
-        // ฟังก์ชันตรวจสอบคีย์ตามเงื่อนไข: pooh-[ตัวเลข]day-proxy[ตัวเลข 4 หลัก]
+        // เพิ่มคีย์เข้าสู่บัญชีดำแบนถาวร
+        function addKeyToBlacklist(key) {
+            let list = getBlacklist();
+            if (!list.includes(key)) {
+                list.push(key);
+                localStorage.setItem("key_blacklist", JSON.stringify(list));
+            }
+        }
+
+        // ฟังก์ชันนับถอยหลังของจริง Real-time แบบวินาทีต่อวินาที
+        function startRealCountdown(expiryTimestamp, currentKey) {
+            if (countdownInterval) clearInterval(countdownInterval);
+            
+            const timerEl = document.getElementById("countdown-timer");
+            const panelScreen = document.getElementById("panel-screen");
+
+            function updateTimer() {
+                const now = Date.now();
+                const timeLeftMs = expiryTimestamp - now;
+
+                if (timeLeftMs <= 0) {
+                    timerEl.innerText = "คีย์หมดอายุและถูกแบนแล้ว! ❌";
+                    
+                    addKeyToBlacklist(currentKey);
+                    localStorage.removeItem("proxy_expiry_time");
+                    localStorage.removeItem("proxy_active_key");
+                    
+                    clearInterval(countdownInterval);
+                    
+                    setTimeout(() => {
+                        panelScreen.classList.remove("show");
+                    }, 2500);
+                    return;
+                }
+
+                const totalSeconds = Math.floor(timeLeftMs / 1000);
+                const days = Math.floor(totalSeconds / (24 * 3600));
+                const hrs = Math.floor((totalSeconds % (24 * 3600)) / 3600);
+                const mins = Math.floor((totalSeconds % 3600) / 60);
+                const secs = totalSeconds % 60;
+
+                timerEl.innerText = `${days} วัน ${hrs} ชม. ${mins} นาที ${secs} วิ`;
+            }
+
+            updateTimer();
+            countdownInterval = setInterval(updateTimer, 1000);
+        }
+
+        // เช็คสถานะคีย์เก่าตอนเปิดเว็บขึ้นมาใหม่
+        document.addEventListener("DOMContentLoaded", function() {
+            const savedExpiry = localStorage.getItem("proxy_expiry_time");
+            const savedKey = localStorage.getItem("proxy_active_key");
+            
+            if (savedExpiry && savedKey) {
+                const expiryTimestamp = parseInt(savedExpiry);
+                
+                if (expiryTimestamp > Date.now()) {
+                    document.getElementById("panel-screen").classList.add("show");
+                    startRealCountdown(expiryTimestamp, savedKey);
+                } else {
+                    addKeyToBlacklist(savedKey);
+                    localStorage.removeItem("proxy_expiry_time");
+                    localStorage.removeItem("proxy_active_key");
+                }
+            }
+        });
+
+        // ตรวจสอบคีย์ตามเงื่อนไข: pooh-[ตัวเลข]day-proxy[ตัวเลข 1 ถึง 5 หลัก]
         function validateKey() {
             const keyInput = document.getElementById("access-key").value.trim();
             const udidInput = document.getElementById("device-udid").value.trim();
@@ -563,19 +615,36 @@
             const loginCard = document.getElementById("login-card");
             const panelScreen = document.getElementById("panel-screen");
 
-            // Regular Expression เจาะจงคีย์: pooh-(เลขกี่ตัวก็ได้)day-proxy(เลข 4 ตัวแป๊ะๆ)
-            const keyPattern = /^pooh-(\d+)day-proxy\d{4}$/;
+            // 1. ตรวจสอบแบล็กลิสต์โดนแบนถาวร
+            const blacklist = getBlacklist();
+            if (blacklist.includes(keyInput)) {
+                errorAlert.innerText = "งื้อออ คีย์นี้ถูกแบนและหมดอายุใช้งานแล้วงับ! ❌";
+                errorAlert.style.display = "block";
+                loginCard.classList.remove("shake");
+                void loginCard.offsetWidth; 
+                loginCard.classList.add("shake");
+                return;
+            }
+
+            // 2. อัปเดต: \d{1,5} เพื่อให้รองรับคีย์ตัวเลขท้ายสุดยาว 1 ถึง 5 ตัวอักษร
+            const keyPattern = /^pooh-(\d+)day-proxy\d{1,5}$/;
             const match = keyInput.match(keyPattern);
 
             if (match && udidInput.length > 0) {
-                const daysAmount = parseInt(match[1]); // ดึงตัวเลขจำนวนวันออกมา
+                const daysAmount = parseInt(match[1]);
+                
+                const durationMs = daysAmount * 24 * 60 * 60 * 1000;
+                const expiryTimestamp = Date.now() + durationMs;
 
-                timeRemaining = daysAmount * 24 * 3600; // แปลงวันเป็นวินาทีเพื่อรันระบบนับถอยหลัง
+                localStorage.setItem("proxy_expiry_time", expiryTimestamp);
+                localStorage.setItem("proxy_active_key", keyInput);
 
                 errorAlert.style.display = "none";
                 panelScreen.classList.add("show");
-                startCountdown();
+                
+                startRealCountdown(expiryTimestamp, keyInput);
             } else {
+                errorAlert.innerText = "งื้อออ คีย์ไม่ถูกต้องหรือหมดอายุแล้วงับ! 😭";
                 errorAlert.style.display = "block";
                 loginCard.classList.remove("shake");
                 void loginCard.offsetWidth; 
