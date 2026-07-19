@@ -57,7 +57,7 @@
             z-index: 2;
         }
 
-        /* 👑 วงกลมโลโก้ขยับได้ (Animated Logo Custom) */
+        /* วงกลมโลโก้ขยับได้ (Animated Logo) */
         .logo-container-wrapper {
             position: relative;
             width: 108px;
@@ -95,7 +95,6 @@
             align-items: center;
             overflow: hidden;
             z-index: 1;
-            /* แอนิเมชันจังหวะหายใจเข้าออกชีพจร */
             animation: logoPulse 3s ease-in-out infinite;
         }
 
@@ -234,7 +233,7 @@
         }
 
         /* ---------------------------------- */
-        /* ✨ หน้าจอหลักแผงควบคุมระดับท็อป (NEW UI) */
+        /* หน้าจอหลักแผงควบคุมระดับท็อป (NEW UI) */
         /* ---------------------------------- */
         .overlay-screen {
             position: absolute;
@@ -259,7 +258,6 @@
             visibility: visible;
         }
 
-        /* ปรับปรุงดีไซน์การ์ดด้านในให้สวย มีมิติแบบกระจกนีออน */
         .panel-card {
             background: linear-gradient(165deg, #0e0505 0%, #050202 100%);
             border: 2px solid #4a1212;
@@ -286,7 +284,6 @@
             background: linear-gradient(90deg, transparent, #ff1a1a, transparent);
         }
 
-        /* ปรับดีไซน์กล่องเวลาคงเหลือ */
         .expiry-box {
             display: flex;
             flex-direction: column;
@@ -315,7 +312,6 @@
             font-family: 'Kanit', sans-serif;
         }
 
-        /* ปรับดีไซน์ฟังก์ชันแถวสวิตช์เปิดปิด */
         .function-row {
             display: flex;
             justify-content: space-between;
@@ -350,7 +346,6 @@
             font-family: 'Kanit', sans-serif;
         }
 
-        /* สวิตช์ Apple Style */
         .switch {
             position: relative;
             display: inline-block;
@@ -380,7 +375,6 @@
         input:checked + .slider { background-color: #ff1a1a; box-shadow: 0 0 10px rgba(255, 26, 26, 0.5); }
         input:checked + .slider:before { transform: translateX(22px); }
 
-        /* ส่วนคัดลอก Proxy */
         .copy-container {
             max-height: 0;
             opacity: 0;
@@ -431,7 +425,6 @@
             box-shadow: 0 6px 14px rgba(255, 26, 26, 0.4);
         }
 
-        /* โซนปุ่มเมนูดาวน์โหลดด้านล่าง */
         .bottom-menu {
             margin-top: 24px;
             border-top: 1px dashed #3a1515;
@@ -509,7 +502,6 @@
         <!-- ล็อกอินการ์ดสไตล์ Cyberpunk ดำ-แดง -->
         <div class="cyber-card" id="login-card">
             
-            <!-- โครงสร้างครอบโลโก้แบบใหม่พร้อมแอนิเมชัน -->
             <div class="logo-container-wrapper">
                 <div class="logo-wrapper">
                     <img src="https://cdn.discordapp.com/attachments/1528247158069792863/1528249908845351042/IMG_1880.png?ex=6a5d9d23&is=6a5c4ba3&hm=1258cef0d3504e6bfe263a18198e3ae78fd2238c6bd69536c54b77deba2388a1&" alt="Logo" class="logo-image">
@@ -519,7 +511,7 @@
             <div class="brand-title">REALPOOH <span>PROXY</span></div>
             <div class="brand-subtitle">✨ ยินดีต้อนรับ! กรุณายืนยันตัวตนนะ ✨</div>
 
-            <!-- ช่องใส่ KEY -->
+            <!-- ช่องใส่ KEY (ปิดบังรหัส เพื่อความปลอดภัยและความเป็นส่วนตัว) -->
             <div class="input-group">
                 <input type="password" class="cyber-input" id="access-key" placeholder="🔑 กรอกคีย์เปิดใช้งานระบบที่นี่">
             </div>
@@ -613,6 +605,7 @@
             }
         }
 
+        // ฟังก์ชันนับถอยหลังของจริง Real-time แบบวินาทีต่อวินาที
         function startRealCountdown(expiryTimestamp, currentKey) {
             if (countdownInterval) clearInterval(countdownInterval);
             
@@ -626,14 +619,15 @@
                 if (timeLeftMs <= 0) {
                     timerEl.innerText = "คีย์หมดอายุและถูกแบนแล้ว! ❌";
                     
+                    // แบนคีย์ถาวร
                     addKeyToBlacklist(currentKey);
-                    localStorage.removeItem("proxy_expiry_time");
-                    localStorage.removeItem("proxy_active_key");
                     
                     clearInterval(countdownInterval);
                     
+                    // เตะกลับไปที่หน้ากรอกคีย์หลังจากแสดงสถานะการแบน 2.5 วินาที
                     setTimeout(() => {
                         panelScreen.classList.remove("show");
+                        document.getElementById("access-key").value = "";
                     }, 2500);
                     return;
                 }
@@ -651,24 +645,9 @@
             countdownInterval = setInterval(updateTimer, 1000);
         }
 
-        document.addEventListener("DOMContentLoaded", function() {
-            const savedExpiry = localStorage.getItem("proxy_expiry_time");
-            const savedKey = localStorage.getItem("proxy_active_key");
-            
-            if (savedExpiry && savedKey) {
-                const expiryTimestamp = parseInt(savedExpiry);
-                
-                if (expiryTimestamp > Date.now()) {
-                    document.getElementById("panel-screen").classList.add("show");
-                    startRealCountdown(expiryTimestamp, savedKey);
-                } else {
-                    addKeyToBlacklist(savedKey);
-                    localStorage.removeItem("proxy_expiry_time");
-                    localStorage.removeItem("proxy_active_key");
-                }
-            }
-        });
+        // 🛠️ อัปเดต: ตัดโค้ด Auto-Login ส่วนห้ามข้ามหน้าออกไปเรียบร้อยแล้ว ทุกการรีเฟรช/เปิดใหม่ จะกลับมาถามคีย์เสมอ
 
+        // ตรวจสอบคีย์เงื่อนไข: pooh-[ตัวเลข]day-proxy[ตัวเลขกี่หลักก็ได้]
         function validateKey() {
             const keyInput = document.getElementById("access-key").value.trim();
             const udidInput = document.getElementById("device-udid").value.trim();
@@ -676,6 +655,7 @@
             const loginCard = document.getElementById("login-card");
             const panelScreen = document.getElementById("panel-screen");
 
+            // 1. ตรวจสอบแบล็กลิสต์โดนแบนถาวร
             const blacklist = getBlacklist();
             if (blacklist.includes(keyInput)) {
                 errorAlert.innerText = "งื้อออ คีย์นี้ถูกแบนและหมดอายุใช้งานแล้วงับ! ❌";
@@ -686,6 +666,7 @@
                 return;
             }
 
+            // 2. ตรวจสอบโครงสร้างคีย์ปกติ pooh-(เลข)day-proxy(เลขกี่หลักก็ได้)
             const keyPattern = /^pooh-(\d+)day-proxy\d+$/;
             const match = keyInput.match(keyPattern);
 
@@ -694,9 +675,6 @@
                 
                 const durationMs = daysAmount * 24 * 60 * 60 * 1000;
                 const expiryTimestamp = Date.now() + durationMs;
-
-                localStorage.setItem("proxy_expiry_time", expiryTimestamp);
-                localStorage.setItem("proxy_active_key", keyInput);
 
                 errorAlert.style.display = "none";
                 panelScreen.classList.add("show");
