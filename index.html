@@ -57,7 +57,16 @@
             margin-top: 25px; color: #fff; display: none; padding: 20px; 
             border-radius: 20px; background: #1a0505; border: 1.5px dashed #ff3333;
             text-align: left;
+            /* เพิ่มความสูงสูงสุดและ Scrollbar กรณีสร้างคีย์เยอะๆ */
+            max-height: 400px;
+            overflow-y: auto;
         }
+        
+        /* ปรับแต่ง Scrollbar ให้สวยเข้ากับธีม */
+        #resultArea::-webkit-scrollbar { width: 8px; }
+        #resultArea::-webkit-scrollbar-track { background: #1a0505; border-radius: 10px; }
+        #resultArea::-webkit-scrollbar-thumb { background: #ff3333; border-radius: 10px; }
+        
         .key-list {
             margin: 10px 0;
             padding-left: 0;
@@ -101,7 +110,8 @@
 
         <div class="input-group">
             <label class="input-label">🔑 ปรับจำนวนคีย์ที่ต้องการสร้าง</label>
-            <input type="number" id="amountInput" min="1" max="50" value="1" class="input-field">
+            <!-- ปลดลิมิต max ออก สามารถใส่เลขเยอะๆ ได้เลย -->
+            <input type="number" id="amountInput" min="1" value="1" class="input-field">
         </div>
 
         <button class="submit-btn" onclick="generateKey()">รับคีย์ 🚀</button>
@@ -118,8 +128,8 @@
     </div>
 
     <script>
-        // ใช้ Set ในการจดจำคีย์ที่เคยสร้างไปแล้ว เพื่อไม่ให้ซ้ำกันเด็ดขาด
-        const usedKeysTracker = new Set();
+        // ใช้ Set ในหน่วยความจำเพื่อให้ดึงข้อมูลและตรวจสอบความซ้ำได้เร็วขึ้น
+        const usedKeysTracker = new Set(JSON.parse(localStorage.getItem('poohProxyKeys')) || []);
         let currentGeneratedKeys = [];
 
         function generateKey() {
@@ -131,46 +141,54 @@
             const errorMsg = document.getElementById('errorMsg');
             const copyBtn = document.getElementById('copyBtn');
 
-            // ล้างข้อมูลเก่าบนหน้าจอ
+            // ล้างข้อมูลหน้าจอ เตรียมรับชุดใหม่
             keyList.innerHTML = '';
             currentGeneratedKeys = [];
             resultArea.style.display = 'none';
             errorMsg.style.display = 'none';
             copyBtn.innerText = '📋 คัดลอกคีย์ทั้งหมด';
 
-            // เช็คว่ากรอกข้อมูลมาถูกต้องหรือไม่
+            // ตรวจสอบค่าความถูกต้อง
             if (!days || !amount || amount < 1 || days < 1) {
                 errorMsg.style.display = 'block';
                 return;
             }
 
-            // สร้างคีย์ตามจำนวนที่ขอ
+            // ใช้ DocumentFragment ช่วยให้เบราว์เซอร์ไม่ต้องโหลดซ้ำหลายรอบเวลาสร้างคีย์เยอะๆ
+            const fragment = document.createDocumentFragment();
+
             for (let i = 0; i < amount; i++) {
                 let newKey = '';
                 let isDuplicate = true;
 
-                // ระบบจะสุ่มไปเรื่อยๆ จนกว่าจะได้คีย์ที่ไม่เคยซ้ำกับที่เคยสร้างมาแล้ว
                 while (isDuplicate) {
-                    // สุ่มเลข 5 หลัก (10000 - 99999) เพื่อเพิ่มความหลากหลาย
-                    const randomNum = Math.floor(10000 + Math.random() * 90000);
-                    newKey = `pooh-${days}day-proxy${randomNum}`;
+                    // ใช้ตัวเลขสุ่มผสมหลายชั้นเพื่อให้ได้คีย์ที่ไม่ซ้ำกัน 100%
+                    const timeStamp = Date.now().toString().slice(-4);
+                    const randomNum = Math.floor(10000 + Math.random() * 90000); 
                     
-                    // ถ้าคีย์นี้ยังไม่เคยถูกสร้าง
+                    newKey = `pooh-${days}day-proxy${timeStamp}${randomNum}`;
+                    
                     if (!usedKeysTracker.has(newKey)) {
-                        usedKeysTracker.add(newKey); // จดจำไว้ว่าคีย์นี้ใช้แล้ว
-                        isDuplicate = false; // ออกจากลูปสุ่ม
+                        usedKeysTracker.add(newKey);
+                        isDuplicate = false;
                     }
                 }
 
-                // แสดงผลคีย์บนหน้าจอ
+                // สร้างแท็ก <li>
                 const li = document.createElement('li');
                 li.className = 'key-item';
                 li.innerText = `🔑 ${newKey}`;
-                keyList.appendChild(li);
+                fragment.appendChild(li);
                 
-                // เก็บลง Array เพื่อรอคัดลอก
+                // เก็บใส่กล่องสำหรับปุ่มกดคัดลอก
                 currentGeneratedKeys.push(newKey);
             }
+
+            // แสดงผลรวดเดียว
+            keyList.appendChild(fragment);
+
+            // เซฟคีย์ใหม่ลงเบราว์เซอร์
+            localStorage.setItem('poohProxyKeys', JSON.stringify(Array.from(usedKeysTracker)));
 
             keyDetails.innerText = `อายุการใช้งาน: ${days} วัน | ได้รับทั้งหมด: ${amount} คีย์`;
             resultArea.style.display = 'block';
