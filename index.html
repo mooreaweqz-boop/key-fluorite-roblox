@@ -64,14 +64,14 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            overflow: hidden; /* เพื่อให้รูปทรงกลมตัดขอบสวยงาม */
         }
 
-        .logo-icon {
-            font-size: 38px;
-            font-weight: 900;
-            color: #ffffff;
-            font-style: italic;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        /* ปรับแต่งรูปภาพโลโก้ด้านใน */
+        .logo-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* ปรับรูปภาพให้เต็มวงกลมพอดี */
         }
 
         /* ชื่อแอปสไตล์ทูโทน */
@@ -117,6 +117,8 @@
             outline: none;
             text-align: center;
             transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
         }
 
         .cyber-input::placeholder {
@@ -153,6 +155,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 0 10px rgba(0, 240, 255, 0.1);
+            user-select: none;
         }
 
         .btn-get-udid:hover {
@@ -435,8 +438,9 @@
         <!-- ล็อกอินการ์ดสไตล์ Cyberpunk ดำ-แดง -->
         <div class="cyber-card" id="login-card">
             
+            <!-- อัปเดต: เปลี่ยนจากตัวอักษร R เป็นใส่รูปภาพแทน -->
             <div class="logo-wrapper">
-                <span class="logo-icon">R</span>
+                <img src="avatar.png" alt="Logo" class="logo-image">
             </div>
 
             <div class="brand-title">REALPOOH <span>PROXY</span></div>
@@ -447,10 +451,9 @@
                 <input type="password" class="cyber-input" id="access-key" placeholder="ACCESS KEY">
             </div>
 
-            <!-- ช่องใส่ UDID + ปุ่มดึงค่าเชื่อมลิงก์ภายนอกตามบรีฟใหม่ -->
+            <!-- ช่องใส่ UDID -->
             <div class="row-inputs">
                 <input type="text" class="cyber-input" id="device-udid" placeholder="DEVICE UDID">
-                <!-- อัปเดต: เปลี่ยนเป็นแท็ก <a> เพื่อให้ลิงก์ตรงไปยังเว็บ udid.tech เมื่อกด -->
                 <a href="https://udid.tech/" class="btn-get-udid" target="_blank">GET UDID</a>
             </div>
 
